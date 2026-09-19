@@ -1,4 +1,7 @@
-﻿using System;
+/*Nguyen Ngoc Minh Thu
+ Mssv:2124110080
+ngay sua them "19/9/2026*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +19,7 @@ namespace MiniSupermarketWinForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormCategoryManagement());
+            Application.Run(new FormLogin());
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,16 +10,25 @@ namespace MiniSupermarketWinForms
 {
     public partial class FormCategoryManagement : Form
     {
-        // Địa chỉ Web API
-        // PHẢI sửa port cho đúng với Swagger của bạn
-        private static readonly HttpClient _client = new HttpClient
-        {
-            BaseAddress = new Uri("https://localhost:7006/api/")
-        };
-
         public FormCategoryManagement()
         {
             InitializeComponent();
+        }
+
+        // Bổ sung phương thức cấu hình HttpClient có gắn kèm Token bảo mật
+        private HttpClient GetAuthenticatedClient()
+        {
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("https://localhost:7006/api/")
+            };
+
+            // Đính kèm Token vào Header theo chuẩn Bearer Authentication
+            if (!string.IsNullOrEmpty(SessionManager.JwtToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", SessionManager.JwtToken);
+            }
+            return client;
         }
 
         // Khi Form mở lên
@@ -35,15 +45,16 @@ namespace MiniSupermarketWinForms
         {
             try
             {
-                var categories =
-                    await _client.GetFromJsonAsync<List<CategoryDto>>("categories");
-
-                dgvCategories.DataSource = categories;
+                using (var client = GetAuthenticatedClient()) // Sử dụng client đã gắn token
+                {
+                    var categories = await client.GetFromJsonAsync<List<CategoryDto>>("categories");
+                    dgvCategories.DataSource = categories;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Không thể kết nối đến Server!\n\n" + ex.Message,
+                    "Lỗi quyền truy cập hoặc mất kết nối: " + ex.Message,
                     "Lỗi",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -62,14 +73,9 @@ namespace MiniSupermarketWinForms
 
             DataGridViewRow row = dgvCategories.Rows[e.RowIndex];
 
-            txtId.Text =
-                row.Cells["CategoryId"].Value?.ToString() ?? "";
-
-            txtCategoryName.Text =
-                row.Cells["CategoryName"].Value?.ToString() ?? "";
-
-            txtDescription.Text =
-                row.Cells["Description"].Value?.ToString() ?? "";
+            txtId.Text = row.Cells["CategoryId"].Value?.ToString() ?? "";
+            txtCategoryName.Text = row.Cells["CategoryName"].Value?.ToString() ?? "";
+            txtDescription.Text = row.Cells["Description"].Value?.ToString() ?? "";
         }
 
         // =========================================================
@@ -79,10 +85,10 @@ namespace MiniSupermarketWinForms
         {
             await LoadDataAsync();
         }
+        
         private void label2_Click(object sender, EventArgs e)
         {
         }
-
 
         // =========================================================
         // THÊM MỚI
@@ -92,12 +98,7 @@ namespace MiniSupermarketWinForms
         {
             if (string.IsNullOrWhiteSpace(txtCategoryName.Text))
             {
-                MessageBox.Show(
-                    "Vui lòng nhập tên nhóm hàng!",
-                    "Cảnh báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show("Vui lòng nhập tên nhóm hàng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -109,41 +110,26 @@ namespace MiniSupermarketWinForms
                     Description = txtDescription.Text.Trim()
                 };
 
-                var response =
-                    await _client.PostAsJsonAsync(
-                        "categories",
-                        newCategory);
-
-                if (response.IsSuccessStatusCode)
+                using (var client = GetAuthenticatedClient())
                 {
-                    MessageBox.Show(
-                        "Thêm nhóm hàng thành công!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    var response = await client.PostAsJsonAsync("categories", newCategory);
 
-                    await LoadDataAsync();
-
-                    ClearInputs();
-                }
-                else
-                {
-                    string message = await response.Content.ReadAsStringAsync();
-
-                    MessageBox.Show(
-                        "Thêm thất bại!\n\n" + message,
-                        "Lỗi",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Thêm nhóm hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        await LoadDataAsync();
+                        ClearInputs();
+                    }
+                    else
+                    {
+                        string message = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show("Thêm thất bại!\n\n" + message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Có lỗi xảy ra:\n\n" + ex.Message,
-                    "Lỗi",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Có lỗi xảy ra:\n\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -155,23 +141,13 @@ namespace MiniSupermarketWinForms
         {
             if (!int.TryParse(txtId.Text, out int id))
             {
-                MessageBox.Show(
-                    "Vui lòng chọn nhóm hàng cần cập nhật!",
-                    "Cảnh báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show("Vui lòng chọn nhóm hàng cần cập nhật!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(txtCategoryName.Text))
             {
-                MessageBox.Show(
-                    "Tên nhóm hàng không được để trống!",
-                    "Cảnh báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show("Tên nhóm hàng không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -184,41 +160,26 @@ namespace MiniSupermarketWinForms
                     Description = txtDescription.Text.Trim()
                 };
 
-                var response =
-                    await _client.PutAsJsonAsync(
-                        $"categories/{id}",
-                        updateCategory);
-
-                if (response.IsSuccessStatusCode)
+                using (var client = GetAuthenticatedClient())
                 {
-                    MessageBox.Show(
-                        "Cập nhật thành công!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    var response = await client.PutAsJsonAsync($"categories/{id}", updateCategory);
 
-                    await LoadDataAsync();
-
-                    ClearInputs();
-                }
-                else
-                {
-                    string message = await response.Content.ReadAsStringAsync();
-
-                    MessageBox.Show(
-                        "Cập nhật thất bại!\n\n" + message,
-                        "Lỗi",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        await LoadDataAsync();
+                        ClearInputs();
+                    }
+                    else
+                    {
+                        string message = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show("Cập nhật thất bại!\n\n" + message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Có lỗi xảy ra:\n\n" + ex.Message,
-                    "Lỗi",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Có lỗi xảy ra:\n\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -230,59 +191,37 @@ namespace MiniSupermarketWinForms
         {
             if (!int.TryParse(txtId.Text, out int id))
             {
-                MessageBox.Show(
-                    "Vui lòng chọn nhóm hàng cần xóa!",
-                    "Cảnh báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
+                MessageBox.Show("Vui lòng chọn nhóm hàng cần xóa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            DialogResult confirm = MessageBox.Show(
-                $"Bạn có chắc muốn xóa nhóm hàng ID = {id}?",
-                "Xác nhận xóa",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+            DialogResult confirm = MessageBox.Show($"Bạn có chắc muốn xóa nhóm hàng ID = {id}?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirm != DialogResult.Yes)
                 return;
 
             try
             {
-                var response =
-                    await _client.DeleteAsync($"categories/{id}");
-
-                if (response.IsSuccessStatusCode)
+                using (var client = GetAuthenticatedClient())
                 {
-                    MessageBox.Show(
-                        "Xóa thành công!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    var response = await client.DeleteAsync($"categories/{id}");
 
-                    await LoadDataAsync();
-
-                    ClearInputs();
-                }
-                else
-                {
-                    string message = await response.Content.ReadAsStringAsync();
-
-                    MessageBox.Show(
-                        "Xóa thất bại!\n\n" + message,
-                        "Lỗi",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        await LoadDataAsync();
+                        ClearInputs();
+                    }
+                    else
+                    {
+                        string message = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show("Xóa thất bại!\n\n" + message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Có lỗi xảy ra:\n\n" + ex.Message,
-                    "Lỗi",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Có lỗi xảy ra:\n\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -302,21 +241,17 @@ namespace MiniSupermarketWinForms
 
             try
             {
-                string url =
-                    $"categories/search?keyword={Uri.EscapeDataString(keyword)}";
+                string url = $"categories/search?keyword={Uri.EscapeDataString(keyword)}";
 
-                var result =
-                    await _client.GetFromJsonAsync<List<CategoryDto>>(url);
-
-                dgvCategories.DataSource = result;
+                using (var client = GetAuthenticatedClient())
+                {
+                    var result = await client.GetFromJsonAsync<List<CategoryDto>>(url);
+                    dgvCategories.DataSource = result;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Không thể tìm kiếm!\n\n" + ex.Message,
-                    "Lỗi",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Không thể tìm kiếm!\n\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -335,9 +270,7 @@ namespace MiniSupermarketWinForms
     public class CategoryDto
     {
         public int CategoryId { get; set; }
-
         public string CategoryName { get; set; } = string.Empty;
-
         public string Description { get; set; }
     }
 }
