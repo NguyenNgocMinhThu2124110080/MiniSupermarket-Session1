@@ -1,3 +1,9 @@
+/*
+ * Ten:Nguyen Ngoc Minh Thu
+ * Masv:
+ * Ngay cap nhap: 26/09/2026
+ thay doi code su dung EF Core 
+ */
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniSupermarket.API.Data;
