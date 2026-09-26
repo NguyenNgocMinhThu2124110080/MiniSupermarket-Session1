@@ -1,8 +1,12 @@
 /*Nguyen Ngoc Minh Thu
  Mssv:2124110080
-ngay sua them "19/9/2026*/
+ngay cap nhat: 26/09/2026
+khai bao cac dich vu xac thuc va phan quyen cho API
+*/
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MiniSupermarket.API.Data;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +38,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 // Đăng ký dịch vụ Swagger để tạo tài liệu API
 builder.Services.AddSwaggerGen();
+
+// Lấy chuỗi kết nối từ appsettings.json
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Đăng ký DbContext sử dụng SQL Server qua cơ chế Dependency Injection (DI)
+builder.Services.AddDbContext<SupermarketDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
