@@ -6,9 +6,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MiniSupermarket.API.Models {
+namespace MiniSupermarket.API.Models
+{
     [Table("Products")]
-    public class Product {
+    public class Product
+    {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
@@ -31,4 +33,4 @@ namespace MiniSupermarket.API.Models {
         [ForeignKey("CategoryId")]
         public virtual Category? Category { get; set; }
     }
-} 
+}

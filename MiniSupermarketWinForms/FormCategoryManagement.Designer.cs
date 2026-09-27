@@ -1,4 +1,4 @@
-﻿namespace MiniSupermarketWinForms
+namespace MiniSupermarketWinForms
 {
     partial class FormCategoryManagement
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.btnOpenCustomer = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.txtKeyword = new System.Windows.Forms.TextBox();
@@ -93,6 +94,18 @@
             this.btnLoad.Text = "Tải lại\r\n";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            // 
+            // btnOpenCustomer
+            // 
+            this.btnOpenCustomer.Location = new System.Drawing.Point(470, 42);
+            this.btnOpenCustomer.Name = "btnOpenCustomer";
+            this.btnOpenCustomer.Size = new System.Drawing.Size(130, 23);
+            this.btnOpenCustomer.TabIndex = 10;
+            this.btnOpenCustomer.Text = "Quản lý Khách hàng";
+            this.btnOpenCustomer.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnOpenCustomer.ForeColor = System.Drawing.Color.White;
+            this.btnOpenCustomer.UseVisualStyleBackColor = false;
+            this.btnOpenCustomer.Click += new System.EventHandler(this.btnOpenCustomer_Click);
             // 
             // groupBox1
             // 
@@ -218,6 +231,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(759, 411);
+            this.Controls.Add(this.btnOpenCustomer);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnLoad);
@@ -257,6 +271,7 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnOpenCustomer;
     }
 }
 

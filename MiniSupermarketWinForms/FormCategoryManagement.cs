@@ -256,6 +256,15 @@ namespace MiniSupermarketWinForms
         }
 
         // =========================================================
+        // MO FORM QUAN LY KHACH HANG
+        // =========================================================
+        private void btnOpenCustomer_Click(object sender, EventArgs e)
+        {
+            FormCustomerManagement formCustomer = new FormCustomerManagement();
+            formCustomer.ShowDialog();
+        }
+
+        // =========================================================
         // XÓA TRẮNG FORM
         // =========================================================
         private void ClearInputs()
