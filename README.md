@@ -1,7 +1,11 @@
-# 🛒 HỆ THỐNG QUẢN LÝ SIÊU THỊ MINI (MINISUPERMARKET SYSTEM)
+# 🛒 BÁCH HÓA TỔNG HỢP HOÀNG DUNG
 
-> **Môn học:** Lập trình Ứng dụng .NET Core (Mã môn: 229162)
-> **Buổi thực hành:** Buổi 3 - Tích hợp SQL Server, Entity Framework Core Code-First và Quản lý khách hàng
+## Xây dựng Ứng dụng Quản lý Cửa hàng Tiện lợi với ASP.NET Core và Windows Forms
+
+> **Môn học:** Lập trình Ứng dụng .NET Core
+> **Mã môn:** 229162
+> **Buổi:** 4
+> **Nội dung:** WinForms Shell, Sidebar, Main Workspace và phân quyền người dùng
 
 ---
 
@@ -9,141 +13,265 @@
 
 * **Họ và tên:** Nguyễn Ngọc Minh Thư
 * **MSSV:** 2124110080
-* **Lớp:** CCQ2411C
+* **Lớp:** ....................................
 
 ---
 
-## 🏗️ 2. Mô hình hệ thống
+## 🏪 2. Giới thiệu
 
-Dự án gồm 2 phần chính:
+Đề tài xây dựng hệ thống quản lý **Bách hóa Tổng hợp Hoàng Dung** với:
 
-* **`MiniSupermarket.API` (Backend):** ASP.NET Core Web API xử lý dữ liệu và cung cấp API.
-* **`MiniSupermarket.WinForms` (Frontend):** Windows Forms sử dụng `HttpClient` để gọi API và hiển thị dữ liệu.
-
----
-
-## 🛠️ 3. Công nghệ sử dụng
-
-* **Ngôn ngữ:** C# (.NET 8.0)
 * **Backend:** ASP.NET Core Web API
 * **Frontend:** Windows Forms
 * **Database:** Microsoft SQL Server
-* **ORM:** Entity Framework Core
-* **Kiểm thử:** Swagger UI
-* **Truy vấn:** LINQ, async/await
+* **Entity Framework Core**
+* **Swagger**
+* **RBAC – phân quyền người dùng**
+
+Buổi 4 tập trung xây dựng giao diện quản lý tập trung và phân quyền theo 3 vai trò:
+
+* **Admin**
+* **Cashier**
+* **Warehouse**
 
 ---
 
-## 📌 4. Buổi 3 đã đạt được gì?
+## 🎯 3. Mục tiêu Buổi 4
 
-Trong Buổi 3, hệ thống được nâng cấp từ lưu dữ liệu **In-Memory** sang lưu dữ liệu bằng **SQL Server**.
-
-Các nội dung đã thực hiện:
-
-* Cài đặt các gói Entity Framework Core.
-* Tạo và cấu hình Entity `Category`, `Product`.
-* Tạo `SupermarketDbContext`.
-* Kết nối ASP.NET Core Web API với SQL Server.
-* Tạo Database bằng **EF Core Code-First**.
-* Sử dụng **EF Core Migrations**.
-* Thực hiện CRUD nhóm hàng trên SQL Server.
-* Sử dụng LINQ và `async/await`.
-* Kiểm tra API bằng Swagger.
-* Kết nối và kiểm tra dữ liệu từ WinForms.
-* Đảm bảo dữ liệu vẫn còn sau khi tắt và chạy lại ứng dụng.
+* Xây dựng `FormMainShell` theo mô hình **Single-Form Architecture**.
+* Thiết kế **Sidebar** và **Main Workspace**.
+* Nhúng Form con bằng `TopLevel = false`, `Dock = Fill`.
+* Điều hướng giữa các màn hình nghiệp vụ.
+* Hiển thị thông tin người dùng.
+* Xây dựng **Role-Based Access Control (RBAC)**.
 
 ---
 
-## 👥 5. Bài tập mở rộng – Quản lý khách hàng
-
-Buổi 3 có thêm bài tập mở rộng xây dựng phân hệ **Customers – Quản lý khách hàng**.
-
-Các nội dung thực hiện:
-
-* Tạo Model `Customer`.
-* Thêm `Customers` vào `SupermarketDbContext`.
-* Thêm dữ liệu khách hàng mẫu bằng Data Seeding.
-* Tạo Migration cho bảng `Customers`.
-* Xây dựng `CustomersController`.
-* Thực hiện CRUD khách hàng.
-* Tìm kiếm khách hàng theo tên hoặc số điện thoại.
-* Xây dựng giao diện `FormCustomerManagement` trên WinForms.
-* Kết nối WinForms với API Customers.
-
-### Các chức năng quản lý khách hàng
+## 🖥️ 4. Kiến trúc giao diện
 
 ```text
-GET    /api/customers
-GET    /api/customers/{id}
-GET    /api/customers/search?keyword=...
-POST   /api/customers
-PUT    /api/customers/{id}
-DELETE /api/customers/{id}
+┌──────────────────────────────────────────────────────┐
+│                 FormMainShell                        │
+├─────────────────┬────────────────────────────────────┤
+│                 │                                    │
+│   Sidebar       │       Main Workspace                │
+│                 │                                    │
+│   Bán hàng      │       Form nghiệp vụ               │
+│   Danh mục      │                                    │
+│   Sản phẩm      │                                    │
+│   Khách hàng    │                                    │
+│   Báo cáo       │                                    │
+│   Tài khoản     │                                    │
+│   Đăng xuất     │                                    │
+│                 │                                    │
+└─────────────────┴────────────────────────────────────┘
+```
+
+Các thành phần chính:
+
+* `panelSidebar`: Thanh điều hướng.
+* `panelTopHeader`: Tiêu đề và thông tin người dùng.
+* `panelMainContent`: Vùng hiển thị Form nghiệp vụ.
+
+Sidebar có chiều rộng **230px**, vùng nội dung sử dụng `Dock = Fill`.
+
+---
+
+## 🔄 5. Nhúng Form con
+
+Các Form nghiệp vụ được nhúng vào `panelMainContent` thay vì mở thành nhiều cửa sổ riêng.
+
+```csharp
+childForm.TopLevel = false;
+childForm.FormBorderStyle = FormBorderStyle.None;
+childForm.Dock = DockStyle.Fill;
+```
+
+Hàm `OpenChildForm(...)` chịu trách nhiệm đóng Form đang mở và hiển thị Form mới.
+
+---
+
+## 👤 6. Phân quyền RBAC
+
+| Vai trò       | Quyền truy cập                                          |
+| ------------- | ------------------------------------------------------- |
+| **Admin**     | POS, Danh mục, Sản phẩm, Khách hàng, Báo cáo, Tài khoản |
+| **Cashier**   | POS, Khách hàng                                         |
+| **Warehouse** | Danh mục, Sản phẩm                                      |
+
+Phân quyền được xử lý trong `ApplyRolePermissions()` bằng cách hiển thị hoặc ẩn các nút trên Sidebar.
+
+---
+
+## 🔐 7. Tài khoản mẫu
+
+| Username       | Mật khẩu | Vai trò   |
+| -------------- | -------- | --------- |
+| `admin01`      | `123456` | Admin     |
+| `admin02`      | `123456` | Admin     |
+| `cashier01`    | `123456` | Cashier   |
+| `cashier02`    | `123456` | Cashier   |
+| `cashier03`    | `123456` | Cashier   |
+| `cashier04`    | `123456` | Cashier   |
+| `cashier05`    | `123456` | Cashier   |
+| `cashier06`    | `123456` | Cashier   |
+| `ware01`       | `123456` | Warehouse |
+| `ware02`       | `123456` | Warehouse |
+| `ware03`       | `123456` | Warehouse |
+| `ware04`       | `123456` | Warehouse |
+| `ware05`       | `123456` | Warehouse |
+| `admin_backup` | `123456` | Admin     |
+| `supervisor`   | `123456` | Admin     |
+
+---
+
+## 🧩 8. Các Form nghiệp vụ
+
+### FormPOS
+
+Dành cho **Admin và Cashier**.
+
+Chức năng:
+
+* Tìm sản phẩm theo Barcode.
+* Thêm sản phẩm vào giỏ hàng.
+* Tính tổng tiền và tiền thừa.
+* Nhập khách hàng thành viên.
+* Thanh toán đơn hàng.
+
+### FormProductManagement
+
+Dành cho **Admin và Warehouse**.
+
+Chức năng:
+
+* Xem và tìm kiếm sản phẩm.
+* Lọc theo nhóm hàng.
+* Thêm, sửa, xóa sản phẩm.
+* Quản lý giá bán và tồn kho.
+
+### FormCustomerManagement
+
+Dành cho **Admin và Cashier**.
+
+Chức năng:
+
+* Quản lý khách hàng.
+* Tra cứu khách hàng.
+* Quản lý thông tin khách hàng thân thiết.
+
+### FormUserManagement
+
+Dành cho **Admin**.
+
+Chức năng:
+
+* Xem danh sách tài khoản.
+* Tạo tài khoản.
+* Thiết lập mật khẩu và vai trò.
+* Quản lý trạng thái tài khoản.
+
+### FormQuickReport
+
+Dành cho **Admin**.
+
+Hiển thị:
+
+* Tổng số hóa đơn.
+* Tổng doanh thu.
+* Mặt hàng bán chạy nhất.
+
+---
+
+## 🔗 9. Điều hướng
+
+Các nút trên Sidebar mở Form tương ứng:
+
+```text
+Bán hàng       → FormPOS
+Danh mục       → FormCategoryManagement
+Sản phẩm       → FormProductManagement
+Khách hàng     → FormCustomerManagement
+Báo cáo        → FormQuickReport
+Tài khoản       → FormUserManagement
+```
+
+Các Form được mở thông qua:
+
+```csharp
+OpenChildForm(...)
+```
+
+và hiển thị trong `panelMainContent`.
+
+---
+
+## 🧪 10. Kiểm thử phân quyền
+
+### Cashier
+
+```text
+cashier01 / 123456
+
+✓ Bán hàng
+✓ Khách hàng
+✗ Danh mục
+✗ Sản phẩm
+✗ Báo cáo
+✗ Tài khoản
+```
+
+### Warehouse
+
+```text
+ware01 / 123456
+
+✓ Danh mục
+✓ Sản phẩm
+✗ Bán hàng
+✗ Khách hàng
+✗ Báo cáo
+✗ Tài khoản
+```
+
+### Admin
+
+```text
+admin01 / 123456
+
+✓ Bán hàng
+✓ Danh mục
+✓ Sản phẩm
+✓ Khách hàng
+✓ Báo cáo
+✓ Tài khoản
 ```
 
 ---
 
-## 🔄 6. Buổi 3 khác Buổi 2
+## 📈 11. Kết quả đạt được
 
-| Buổi 2                      | Buổi 3                            |
-| --------------------------- | --------------------------------- |
-| Lưu dữ liệu In-Memory       | Lưu dữ liệu bằng SQL Server       |
-| Dữ liệu tạm thời            | Dữ liệu được lưu lâu dài          |
-| Chưa sử dụng EF Core        | Sử dụng Entity Framework Core     |
-| Chưa có Database thực tế    | Có Database `MiniSupermarketDb`   |
-| CRUD trên dữ liệu trong RAM | CRUD trực tiếp trên SQL Server    |
-| Chưa có phân hệ Customers   | Có thêm bài tập quản lý Customers |
+Sau Buổi 4, hệ thống đã triển khai:
 
----
-
-## 🗄️ 7. Cơ sở dữ liệu
-
-Tên Database:
-
-```text
-MiniSupermarketDb
-```
-
-Các bảng được sử dụng:
-
-```text
-Categories
-Products
-Customers
-```
-
-Dữ liệu được lưu trực tiếp trên SQL Server nên vẫn tồn tại sau khi tắt và khởi động lại API.
+* `FormMainShell` và giao diện Sidebar.
+* Main Workspace để hiển thị Form nghiệp vụ.
+* Điều hướng giữa các Form.
+* Nhúng Form con bằng `TopLevel = false` và `Dock = Fill`.
+* Phân quyền Admin / Cashier / Warehouse.
+* Màn hình POS.
+* Quản lý sản phẩm.
+* Quản lý khách hàng.
+* Quản lý tài khoản.
+* Form báo cáo doanh thu.
 
 ---
 
-## 🚀 8. Hướng dẫn chạy dự án
+## 📚 12. Kiến thức đạt được
 
-### Bước 1: Chạy Backend
-
-1. Mở Solution bằng **Visual Studio 2022**.
-2. Chọn `MiniSupermarket.API` làm Startup Project.
-3. Nhấn **F5** để chạy Web API.
-4. Mở Swagger UI để kiểm tra các API.
-
-### Bước 2: Chạy WinForms
-
-1. Đảm bảo Web API đang chạy.
-2. Kiểm tra địa chỉ API trong project WinForms.
-3. Chạy `MiniSupermarket.WinForms`.
-4. Kiểm tra các chức năng quản lý nhóm hàng và khách hàng.
-
----
-
-## 📚 9. Kiến thức đạt được
-
-* Kết nối ASP.NET Core Web API với SQL Server.
-* Sử dụng Entity Framework Core Code-First.
-* Sử dụng EF Core Migrations.
-* Sử dụng DbContext và DbSet.
-* Sử dụng LINQ.
-* Sử dụng `async/await`.
-* Thực hiện CRUD với SQL Server.
-* Xây dựng quan hệ giữa các Entity.
-* Seed dữ liệu ban đầu.
-* Xây dựng API quản lý khách hàng.
-* Kết nối Backend với WinForms.
+* Single-Form Architecture trong WinForms.
+* Thiết kế giao diện bằng Panel và các Control.
+* Nhúng và điều hướng Form con.
+* Quản lý Session người dùng.
+* Xây dựng RBAC.
+* Phân quyền giao diện theo vai trò.
+* Kết nối WinForms với ASP.NET Core Web API.

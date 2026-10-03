@@ -13,17 +13,17 @@ namespace MiniSupermarketWinForms
     // Lớp tĩnh quản lý trạng thái phiên đăng nhập của ứng dụng (lưu Token)
     public static class SessionManager
     {
-        // Lưu trữ JWT Token nhận được từ Backend
-        public static string JwtToken { get; set; } = string.Empty;
-        // Lưu trữ chức vụ/vai trò hiện tại của người dùng (VD: Admin, Cashier)
+        public static string JwtToken    { get; set; } = string.Empty;
         public static string CurrentRole { get; set; } = string.Empty;
+        public static string CurrentUser { get; set; } = string.Empty; // Ho ten nguoi dang nhap
+        public static string CurrentUsername { get; set; } = string.Empty;
     }
 
     // Lớp tĩnh cung cấp các hàm gọi API dùng chung
     public static class ApiClientService
     {
         // Khởi tạo một thể hiện HttpClient dùng chung xuyên suốt ứng dụng
-        private static readonly HttpClient _client = new HttpClient
+        public static readonly HttpClient Client = new HttpClient
         {
             // Thiết lập địa chỉ gốc của Backend API (Thay thế port nếu backend của bạn chạy cổng khác)
             BaseAddress = new Uri("https://localhost:7006/api/")
@@ -36,7 +36,7 @@ namespace MiniSupermarketWinForms
             var loginObj = new { Username = username, Password = password };
             
             // Gửi request POST tới endpoint auth/login
-            var response = await _client.PostAsJsonAsync("auth/login", loginObj);
+            var response = await Client.PostAsJsonAsync("auth/login", loginObj);
             
             if (response.IsSuccessStatusCode)
             {
@@ -59,10 +59,10 @@ namespace MiniSupermarketWinForms
         public static async Task<string> GetDataWithTokenAsync(string endpoint)
         {
             // Gắn mã Token vào tiêu đề Authorization của mỗi Request
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", SessionManager.JwtToken);
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", SessionManager.JwtToken);
             
             // Gọi phương thức GET tới endpoint tương ứng
-            var response = await _client.GetAsync(endpoint);
+            var response = await Client.GetAsync(endpoint);
             
             if (response.IsSuccessStatusCode)
             {

@@ -1,6 +1,10 @@
-/*Nguyen Ngoc Minh Thu
- Mssv:2124110080
-ngay tao "19/9/2026*/
+/*
+ * Ten: Nguyen Ngoc Minh Thu
+ * Masv: 2124110080
+ * Ngay cap nhat: 03/10/2026
+ * AuthController - Xac thuc dang nhap va cap JWT Token
+ * Cap nhat: Bo sung 15 tai khoan mau phan quyen (Admin / Cashier / Warehouse)
+ */
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,60 +17,78 @@ namespace MiniSupermarket.API.Controllers {
     public class AuthController : ControllerBase {
         private readonly IConfiguration _configuration;
 
-        // Constructor inject IConfiguration để đọc thiết lập từ appsettings.json
         public AuthController(IConfiguration configuration) {
             _configuration = configuration;
         }
 
-        // Endpoint Đăng nhập: POST /api/auth/login
+        // Danh sach 15 tai khoan mau phan quyen (username, password, hoTen, role)
+        private static readonly List<(string User, string Pass, string HoTen, string Role)> _accounts = new()
+        {
+            ("admin01",      "123456", "Nguyễn Quản Trị",    "Admin"),
+            ("admin02",      "123456", "Trần Giám Đốc",      "Admin"),
+            ("cashier01",    "123456", "Lê Thu Ngân",         "Cashier"),
+            ("cashier02",    "123456", "Phạm Bán Hàng",       "Cashier"),
+            ("cashier03",    "123456", "Hoàng Thu Ngân",      "Cashier"),
+            ("cashier04",    "123456", "Vũ Thị Quầy",         "Cashier"),
+            ("cashier05",    "123456", "Đỗ Bán Lẻ",           "Cashier"),
+            ("ware01",       "123456", "Ngô Quản Kho",        "Warehouse"),
+            ("ware02",       "123456", "Bùi Kiểm Kê",         "Warehouse"),
+            ("ware03",       "123456", "Dương Thủ Kho",       "Warehouse"),
+            ("ware04",       "123456", "Lý Nhập Hàng",        "Warehouse"),
+            ("admin_backup", "123456", "Đặng Hỗ Trợ",        "Admin"),
+            ("cashier06",    "123456", "Hồ Ca Chiều",         "Cashier"),
+            ("ware05",       "123456", "Trương Vận Chuyển",   "Warehouse"),
+            ("supervisor",   "123456", "Mai Giám Sát",        "Admin"),
+            // Giu lai tai khoan cu de tuong thich
+            ("admin",        "123456", "Quản Trị Viên",       "Admin"),
+            ("cashier",      "123456", "Thu Ngân",            "Cashier"),
+        };
+
+        // POST /api/auth/login
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequestDto request) {
-            // Kiểm tra tài khoản mẫu (Trong thực tế sẽ truy vấn qua EF Core / SQL Server)
-            if (request.Username == "admin" && request.Password == "123456") {
-                // Nếu đúng tài khoản admin, gọi hàm để tạo JWT Token với vai trò "Admin"
-                var token = GenerateJwtToken(request.Username, "Admin");
-                // Trả về kết quả HTTP 200 OK kèm theo token và vai trò
-                return Ok(new { success = true, token = token, role = "Admin" });
-            } else if (request.Username == "cashier" && request.Password == "123456") {
-                // Nếu đúng tài khoản cashier, gọi hàm để tạo JWT Token với vai trò "Cashier"
-                var token = GenerateJwtToken(request.Username, "Cashier");
-                // Trả về kết quả HTTP 200 OK kèm theo token và vai trò
-                return Ok(new { success = true, token = token, role = "Cashier" });
+            var account = _accounts.FirstOrDefault(
+                a => a.User == request.Username && a.Pass == request.Password);
+
+            if (account == default) {
+                return Unauthorized(new { success = false, message = "Sai tài khoản hoặc mật khẩu!" });
             }
 
-            // Nếu sai tài khoản hoặc mật khẩu, trả về lỗi HTTP 401 (Unauthorized)
-            return Unauthorized(new { success = false, message = "Sai tài khoản hoặc mật khẩu!" });
+            var token = GenerateJwtToken(account.User, account.HoTen, account.Role);
+            return Ok(new {
+                success  = true,
+                token    = token,
+                role     = account.Role,
+                hoTen    = account.HoTen,
+                username = account.User
+            });
         }
 
-        // Hàm dùng để tạo JWT Token
-        private string GenerateJwtToken(string username, string role) {
+        // Tao JWT Token voi username, hoTen, role
+        private string GenerateJwtToken(string username, string hoTen, string role) {
             var tokenHandler = new JwtSecurityTokenHandler();
-            // Lấy khóa bí mật từ appsettings.json (Nếu không có, sẽ lấy chuỗi mặc định, khóa này nên bảo mật trong thực tế)
-            var key = Encoding.ASCII.GetBytes(_configuration["JwtSettings:Secret"] ?? "SupermarketSecretKeyDoAnMonHoc2026SecureString!!");
-            
-            // Cấu hình các thông tin (claims) và thời hạn của token
+            var key = Encoding.ASCII.GetBytes(
+                _configuration["JwtSettings:Secret"] ?? "SupermarketSecretKeyDoAnMonHoc2026SecureString!!");
+
             var tokenDescriptor = new SecurityTokenDescriptor {
                 Subject = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.Name, username), // Lưu tên đăng nhập vào token
-                    new Claim(ClaimTypes.Role, role)      // Lưu vai trò vào token
+                    new Claim(ClaimTypes.Name,               username),
+                    new Claim("HoTen",                       hoTen),
+                    new Claim(ClaimTypes.Role,               role)
                 }),
-                Expires = DateTime.UtcNow.AddHours(2), // Thời hạn token là 2 tiếng kể từ lúc tạo
-                // Khai báo thuật toán mã hóa được sử dụng để ký token (HS256)
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                Expires = DateTime.UtcNow.AddHours(8),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
             };
-            
-            // Tạo ra đối tượng Token
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            // Viết Token thành dạng chuỗi string (mã hóa JWT) để trả về client
             return tokenHandler.WriteToken(token);
         }
     }
 
-    // Lớp Dto (Data Transfer Object) dùng để hứng dữ liệu đầu vào từ phía client
     public class LoginRequestDto {
-        // Thuộc tính tên người dùng
         public string Username { get; set; } = string.Empty;
-        // Thuộc tính mật khẩu
         public string Password { get; set; } = string.Empty;
     }
 }
