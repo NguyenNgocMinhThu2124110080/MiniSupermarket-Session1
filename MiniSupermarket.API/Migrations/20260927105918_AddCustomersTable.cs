@@ -30,15 +30,15 @@ namespace MiniSupermarket.API.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Customers",
-                columns: new[] { "CustomerId", "Address", "CustomerName", "MembershipRank", "PhoneNumber", "RewardPoints" },
-                values: new object[,]
-                {
-                    { 1, "TP. Hồ Chí Minh", "Nguyễn Văn A", "Vàng", "0901122334", 150 },
-                    { 2, "TP. Hồ Chí Minh", "Trần Thị B", "Bạc", "0918877665", 50 },
-                    { 3, "TP. Hồ Chí Minh", "Lê Văn C", "Chuẩn", "0983344556", 10 }
-                });
-        }
+             table: "Customers",
+             columns: new[] { "CustomerId", "Address", "CustomerName", "MembershipRank", "PhoneNumber", "RewardPoints" },
+             values: new object[,]
+             {
+                { 1, "123 Nguyễn Trãi, Phường Bến Thành, Quận 1, TP. Hồ Chí Minh", "Nguyễn Văn A", "Vàng", "0901122334", 150 },
+                { 2, "45 Lê Văn Sỹ, Phường 13, Quận 3, TP. Hồ Chí Minh", "Trần Thị B", "Bạc", "0918877665", 50 },
+                { 3, "78 Phan Văn Trị, Phường 10, Quận Gò Vấp, TP. Hồ Chí Minh", "Lê Văn C", "Chuẩn", "0983344556", 10 }
+             });
+                }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)

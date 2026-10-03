@@ -265,6 +265,15 @@ namespace MiniSupermarketWinForms
         }
 
         // =========================================================
+        // MO FORM QUAN LY SAN PHAM
+        // =========================================================
+        private void btnOpenProduct_Click(object sender, EventArgs e)
+        {
+            FormProductManagement formProduct = new FormProductManagement();
+            formProduct.ShowDialog();
+        }
+
+        // =========================================================
         // XÓA TRẮNG FORM
         // =========================================================
         private void ClearInputs()

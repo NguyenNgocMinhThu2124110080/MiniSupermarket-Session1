@@ -29,6 +29,7 @@ namespace MiniSupermarketWinForms
         private void InitializeComponent()
         {
             this.btnOpenCustomer = new System.Windows.Forms.Button();
+            this.btnOpenProduct = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.txtKeyword = new System.Windows.Forms.TextBox();
@@ -106,6 +107,18 @@ namespace MiniSupermarketWinForms
             this.btnOpenCustomer.ForeColor = System.Drawing.Color.White;
             this.btnOpenCustomer.UseVisualStyleBackColor = false;
             this.btnOpenCustomer.Click += new System.EventHandler(this.btnOpenCustomer_Click);
+            // 
+            // btnOpenProduct
+            // 
+            this.btnOpenProduct.Location = new System.Drawing.Point(610, 42);
+            this.btnOpenProduct.Name = "btnOpenProduct";
+            this.btnOpenProduct.Size = new System.Drawing.Size(130, 23);
+            this.btnOpenProduct.TabIndex = 11;
+            this.btnOpenProduct.Text = "Quản lý Sản phẩm";
+            this.btnOpenProduct.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnOpenProduct.ForeColor = System.Drawing.Color.White;
+            this.btnOpenProduct.UseVisualStyleBackColor = false;
+            this.btnOpenProduct.Click += new System.EventHandler(this.btnOpenProduct_Click);
             // 
             // groupBox1
             // 
@@ -230,7 +243,8 @@ namespace MiniSupermarketWinForms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(759, 411);
+            this.ClientSize = new System.Drawing.Size(900, 411);
+            this.Controls.Add(this.btnOpenProduct);
             this.Controls.Add(this.btnOpenCustomer);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -272,6 +286,7 @@ namespace MiniSupermarketWinForms
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnOpenCustomer;
+        private System.Windows.Forms.Button btnOpenProduct;
     }
 }
 

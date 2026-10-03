@@ -14,6 +14,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -91,6 +92,12 @@
     </Compile>
     <Compile Include="FormCategoryManagement.Designer.cs">
       <DependentUpon>FormCategoryManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormProductManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProductManagement.Designer.cs">
+      <DependentUpon>FormProductManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
