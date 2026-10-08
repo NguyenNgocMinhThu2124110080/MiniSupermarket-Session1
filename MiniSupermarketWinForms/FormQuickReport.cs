@@ -14,7 +14,7 @@ namespace MiniSupermarketWinForms {
         }
 
         private void btnRunReport_Click(object sender, EventArgs e) {
-            if (MiniSupermarketWinForms.SessionManager.CurrentRole != "Admin") {
+            if (!string.Equals(MiniSupermarketWinForms.SessionManager.CurrentRole, "Admin", StringComparison.OrdinalIgnoreCase)) {
                 MessageBox.Show("Bạn không có quyền xem dữ liệu tài chính của siêu thị!", "Từ chối", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }

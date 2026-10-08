@@ -22,7 +22,7 @@ namespace MiniSupermarketWinForms {
             await LoadUsersAsync();
         }
 
-        private async Task LoadUsersAsync() {
+        private Task LoadUsersAsync() {
             try {
                 // Fake API call for now since we don't have a Users endpoint yet
                 // var users = await ApiClientService.Client.GetFromJsonAsync<List<UserDto>>("users");
@@ -36,6 +36,7 @@ namespace MiniSupermarketWinForms {
             } catch (Exception ex) {
                 MessageBox.Show("Lỗi lấy danh sách tài khoản: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            return Task.CompletedTask;
         }
 
         private async void btnAddUser_Click(object sender, EventArgs e) {

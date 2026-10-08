@@ -19,11 +19,11 @@ namespace MiniSupermarketWinForms
             // 1. Hiển thị thông tin phiên người dùng đăng nhập
             lblUserInfo.Text = $"Nhân viên: {SessionManager.CurrentUser} ({SessionManager.CurrentUsername}) | Vai trò: [{SessionManager.CurrentRole}]";
 
-            // 2. TẠM THỜI TẮT PHÂN QUYỀN GIAO DIỆN
-            // ApplyRolePermissions(SessionManager.CurrentRole);
+            // 2. Kích hoạt phân quyền giao diện theo vai trò (Role-Based Access)
+            ApplyRolePermissions(SessionManager.CurrentRole);
 
-            // 3. TẠM THỜI TẮT MỞ MÀN HÌNH MẶC ĐỊNH THEO VAI TRÒ
-            // OpenDefaultScreenByRole(SessionManager.CurrentRole);
+            // 3. Mở màn hình mặc định tương ứng với vai trò
+            OpenDefaultScreenByRole(SessionManager.CurrentRole);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace MiniSupermarketWinForms
         /// </summary>
         private void ApplyRolePermissions(string role)
         {
-            switch (role.ToUpper())
+            switch ((role ?? string.Empty).ToUpper())
             {
                 case "ADMIN":
                     // Quản trị viên: Có toàn quyền sử dụng tất cả các nút
@@ -122,61 +122,77 @@ namespace MiniSupermarketWinForms
         /// </summary>
         private void OpenDefaultScreenByRole(string role)
         {
-            switch (role.ToUpper())
+            switch ((role ?? string.Empty).ToUpper())
             {
                 case "ADMIN":
-                case "WAREHOUSE":
                     OpenChildForm(new FormCategoryManagement(), "QUẢN LÝ DANH MỤC NHÓM HÀNG", btnCategory);
                     break;
 
+                case "WAREHOUSE":
+                    OpenChildForm(new FormProductManagement(), "QUẢN LÝ THÔNG TIN SẢN PHẨM & KHO HÀNG", btnProduct);
+                    break;
+
                 case "CASHIER":
-                    OpenChildForm(new FormCustomerManagement(), "QUẢN LÝ KHÁCH HÀNG & TÍCH ĐIỂM", btnCustomer);
+                    OpenChildForm(new FormPOS(), "HỆ THỐNG QUẦY BÁN HÀNG & THU NGÂN (POS)", btnPOS);
                     break;
             }
         }
 
         // ================= CÁC SỰ KIỆN CLICK NÚT TRÊN SIDEBAR =================
 
+        private static bool IsInRole(params string[] roles)
+        {
+            string current = SessionManager.CurrentRole ?? string.Empty;
+            foreach (var r in roles)
+            {
+                if (string.Equals(current, r, StringComparison.OrdinalIgnoreCase)) return true;
+            }
+            MessageBox.Show("Bạn không có quyền truy cập chức năng này!", "Từ chối", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            return false;
+        }
+
         private void btnCategory_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FormCategoryManagement(), "QUẢN LÝ DANH MỤC SẢN PHẨM", btnCategory);
+            if (!IsInRole("Admin", "Warehouse")) return;
+            OpenChildForm(new FormCategoryManagement(), "QUẢN LÝ DANH MỤC NHÓM HÀNG", btnCategory);
         }
 
         private void btnCustomer_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FormCustomerManagement(), "QUẢN LÝ KHÁCH HÀNG THÂN THIẾT", btnCustomer);
+            if (!IsInRole("Admin", "Cashier")) return;
+            OpenChildForm(new FormCustomerManagement(), "QUẢN LÝ KHÁCH HÀNG & TÍCH ĐIỂM", btnCustomer);
         }
 
         private void btnPOS_Click(object sender, EventArgs e)
         {
+            if (!IsInRole("Admin", "Cashier")) return;
             OpenChildForm(new FormPOS(), "HỆ THỐNG QUẦY BÁN HÀNG & THU NGÂN (POS)", btnPOS);
         }
 
         private void btnProduct_Click(object sender, EventArgs e)
         {
+            if (!IsInRole("Admin", "Warehouse")) return;
             OpenChildForm(new FormProductManagement(), "QUẢN LÝ THÔNG TIN SẢN PHẨM & KHO HÀNG", btnProduct);
         }
 
         private void btnReports_Click(object sender, EventArgs e)
         {
-            // TẠM THỜI TẮT KIỂM TRA PHÂN QUYỀN
-            // if (SessionManager.CurrentRole != "Admin")
-            // {
-            //     MessageBox.Show("Bạn không có quyền xem dữ liệu tài chính của siêu thị!", "Từ chối", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            //     return;
-            // }
+            if (!string.Equals(SessionManager.CurrentRole, "Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Bạn không có quyền xem dữ liệu tài chính của siêu thị!", "Từ chối", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
 
             OpenChildForm(new FormQuickReport(), "BÁO CÁO DOANH THU & HIỆU SUẤT", btnReports);
         }
 
         private void btnUserManage_Click(object sender, EventArgs e)
         {
-            // TẠM THỜI TẮT KIỂM TRA PHÂN QUYỀN
-            // if (SessionManager.CurrentRole != "Admin")
-            // {
-            //     MessageBox.Show("Bạn không có quyền quản lý tài khoản!", "Từ chối", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            //     return;
-            // }
+            if (!string.Equals(SessionManager.CurrentRole, "Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Bạn không có quyền quản lý tài khoản!", "Từ chối", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
 
             OpenChildForm(new FormUserManagement(), "QUẢN TRỊ TÀI KHOẢN VÀ PHÂN QUYỀN HỆ THỐNG", btnUserManage);
         }
