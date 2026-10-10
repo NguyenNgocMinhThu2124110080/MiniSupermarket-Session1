@@ -1,5 +1,5 @@
 
-# 🛒 BÁCH HÓA TỔNG HỢP HOÀNG DUNG
+# 🛒 BÁCH HÓA TỔNG HỢP
 
 ## Xây dựng Ứng dụng Quản lý Cửa hàng Tiện lợi với ASP.NET Core và Windows Forms
 
