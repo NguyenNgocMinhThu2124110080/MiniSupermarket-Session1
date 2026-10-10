@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniSupermarketWinForms", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThucHanhAdoNet_Tiet1", "ThucHanhAdoNet_Tiet1\ThucHanhAdoNet_Tiet1.csproj", "{6339BF40-677B-4DD3-A78E-CB395110F882}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThucHanhTransaction_Tiet4", "ThucHanhTransaction_Tiet4\ThucHanhTransaction_Tiet4.csproj", "{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{6339BF40-677B-4DD3-A78E-CB395110F882}.Release|x64.Build.0 = Release|Any CPU
 		{6339BF40-677B-4DD3-A78E-CB395110F882}.Release|x86.ActiveCfg = Release|Any CPU
 		{6339BF40-677B-4DD3-A78E-CB395110F882}.Release|x86.Build.0 = Release|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Debug|x64.Build.0 = Debug|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Debug|x86.Build.0 = Debug|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Release|x64.ActiveCfg = Release|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Release|x64.Build.0 = Release|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Release|x86.ActiveCfg = Release|Any CPU
+		{8B038639-9D43-4CC2-82B2-5ED83EDCCC54}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,10 +1,4 @@
-/*
- * Ten: Nguyen Ngoc Minh Thu
- * Masv: 2124110080
- * Ngay tao: 03/10/2026
- * Mo ta: FormPOS - Man hinh Ban hang quay POS, xu ly quet ma vach va thanh toan
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -31,7 +25,6 @@ namespace MiniSupermarketWinForms {
             dgvCart.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "TotalPrice", HeaderText = "Thành Tiền", Width = 120 });
         }
 
-        // Bắt sự kiện quét mã Barcode
         private async void txtBarcode_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(txtBarcode.Text)) {
                 string barcode = txtBarcode.Text.Trim();
@@ -42,8 +35,7 @@ namespace MiniSupermarketWinForms {
 
         private async Task AddProductToCartByBarcodeAsync(string barcode) {
             try {
-                // Gọi API tra cứu sản phẩm theo Barcode
-                var product = await MiniSupermarketWinForms.ApiClientService.Client.GetFromJsonAsync<ProductDto>($"products/search?barcode={barcode}"); // Da fix endpoint
+                var product = await MiniSupermarketWinForms.ApiClientService.Client.GetFromJsonAsync<ProductDto>($"products/search?barcode={barcode}");
                 if (product == null) {
                     MessageBox.Show("Không tìm thấy sản phẩm có mã vạch này!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -98,23 +90,26 @@ namespace MiniSupermarketWinForms {
             }
 
             var orderRequest = new {
-                CashierUsername = MiniSupermarketWinForms.SessionManager.CurrentUsername,
-                CustomerPhone = txtCustomerPhone.Text.Trim(),
+                CashierUsername = string.IsNullOrEmpty(MiniSupermarketWinForms.SessionManager.CurrentUsername) ? "cashier01" : MiniSupermarketWinForms.SessionManager.CurrentUsername,
+                CustomerId = 1,
                 Items = _cart.Select(i => new { i.ProductId, i.Quantity, i.UnitPrice }).ToList()
             };
 
-            // Fake call for now since orders endpoint isn't built yet
-            // var response = await ApiClientService.Client.PostAsJsonAsync("orders/checkout", orderRequest);
-            bool success = true;
-            if (success) {
-                MessageBox.Show("Thanh toán thành công và đã in hóa đơn!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _cart.Clear();
-                UpdateCartDisplay();
-                txtCashReceived.Clear();
-                txtCustomerPhone.Clear();
-                lblCustomerName.Text = "Khách vãng lai";
-            } else {
-                MessageBox.Show("Thanh toán thất bại từ máy chủ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            try {
+                var response = await MiniSupermarketWinForms.ApiClientService.Client.PostAsJsonAsync("Checkout", orderRequest);
+                if (response.IsSuccessStatusCode) {
+                    MessageBox.Show("Thanh toán thành công và đã lưu vào cơ sở dữ liệu!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _cart.Clear();
+                    UpdateCartDisplay();
+                    txtCashReceived.Clear();
+                    txtCustomerPhone.Clear();
+                    lblCustomerName.Text = "Khách vãng lai";
+                } else {
+                    var errorMsg = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show("Thanh toán thất bại từ máy chủ: " + errorMsg, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            } catch (Exception ex) {
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
@@ -135,3 +130,4 @@ namespace MiniSupermarketWinForms {
         public int StockQuantity { get; set; }
     }
 }
+

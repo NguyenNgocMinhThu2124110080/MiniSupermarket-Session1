@@ -1,277 +1,171 @@
+
 # 🛒 BÁCH HÓA TỔNG HỢP HOÀNG DUNG
 
 ## Xây dựng Ứng dụng Quản lý Cửa hàng Tiện lợi với ASP.NET Core và Windows Forms
 
-> **Môn học:** Lập trình Ứng dụng .NET Core
-> **Mã môn:** 229162
-> **Buổi:** 4
-> **Nội dung:** WinForms Shell, Sidebar, Main Workspace và phân quyền người dùng
+**Môn học:** Lập trình Ứng dụng .NET Core  
+**Mã môn:** 229162  
+**Buổi:** 5  
+**Nội dung:** ADO.NET nâng cao, Stored Procedure và giao dịch thanh toán POS
 
 ---
 
-## 👨‍🎓 1. Thông tin sinh viên
+## 1. Thông tin sinh viên
 
-* **Họ và tên:** Nguyễn Ngọc Minh Thư
-* **MSSV:** 2124110080
-* **Lớp:** ....................................
-
----
-
-## 🏪 2. Giới thiệu
-
-Đề tài xây dựng hệ thống quản lý **Bách hóa Tổng hợp Hoàng Dung** với:
-
-* **Backend:** ASP.NET Core Web API
-* **Frontend:** Windows Forms
-* **Database:** Microsoft SQL Server
-* **Entity Framework Core**
-* **Swagger**
-* **RBAC – phân quyền người dùng**
-
-Buổi 4 tập trung xây dựng giao diện quản lý tập trung và phân quyền theo 3 vai trò:
-
-* **Admin**
-* **Cashier**
-* **Warehouse**
+- **Họ và tên:** Nguyễn Ngọc Minh Thư
+- **MSSV:** 2124110080
+- **Lớp:** CCQ2411C
 
 ---
 
-## 🎯 3. Mục tiêu Buổi 4
+## 2. Giới thiệu
 
-* Xây dựng `FormMainShell` theo mô hình **Single-Form Architecture**.
-* Thiết kế **Sidebar** và **Main Workspace**.
-* Nhúng Form con bằng `TopLevel = false`, `Dock = Fill`.
-* Điều hướng giữa các màn hình nghiệp vụ.
-* Hiển thị thông tin người dùng.
-* Xây dựng **Role-Based Access Control (RBAC)**.
+Buổi 5 tập trung nâng cao kỹ năng truy xuất dữ liệu SQL Server bằng ADO.NET, tối ưu truy vấn và đảm bảo tính toàn vẹn dữ liệu trong nghiệp vụ bán hàng.
+
+Các nội dung chính gồm:
+
+- Sử dụng ADO.NET để kết nối và thao tác SQL Server.
+- Tra cứu sản phẩm bằng mã vạch Barcode.
+- Tạo Stored Procedure thống kê doanh thu.
+- Áp dụng nguyên tắc ACID và `SqlTransaction`.
+- Xây dựng API thanh toán POS có cơ chế `Commit` và `Rollback`.
+
+## 3. Công nghệ sử dụng
+
+- C# và .NET
+- ASP.NET Core Web API
+- Windows Forms (WinForms)
+- Microsoft SQL Server
+- ADO.NET (`SqlConnection`, `SqlCommand`, `SqlParameter`, `SqlDataReader`)
+- Stored Procedure
+- Swagger UI
 
 ---
 
-## 🖥️ 4. Kiến trúc giao diện
+## 4. Nội dung thực hiện
 
-```text
-┌──────────────────────────────────────────────────────┐
-│                 FormMainShell                        │
-├─────────────────┬────────────────────────────────────┤
-│                 │                                    │
-│   Sidebar       │       Main Workspace                │
-│                 │                                    │
-│   Bán hàng      │       Form nghiệp vụ               │
-│   Danh mục      │                                    │
-│   Sản phẩm      │                                    │
-│   Khách hàng    │                                    │
-│   Báo cáo       │                                    │
-│   Tài khoản     │                                    │
-│   Đăng xuất     │                                    │
-│                 │                                    │
-└─────────────────┴────────────────────────────────────┘
+### 4.1. ADO.NET cơ bản
+
+Tìm hiểu các thành phần chính:
+
+| Thành phần | Chức năng |
+|---|---|
+| `SqlConnection` | Kết nối SQL Server |
+| `SqlCommand` | Thực thi câu lệnh SQL |
+| `SqlParameter` | Truyền tham số an toàn |
+| `SqlDataReader` | Đọc dữ liệu từng dòng |
+| `DataTable` | Lưu dữ liệu dạng bảng trên RAM |
+
+Phân biệt ba phương thức thực thi:
+
+- `ExecuteScalar()`: Lấy một giá trị đơn.
+- `ExecuteNonQuery()`: Thêm, sửa hoặc xóa dữ liệu.
+- `ExecuteReader()`: Đọc nhiều dòng dữ liệu.
+
+Sử dụng `SqlParameter` để hạn chế nguy cơ SQL Injection.
+
+### 4.2. Tra cứu sản phẩm bằng Barcode
+
+Xây dựng API tra cứu sản phẩm trực tiếp bằng ADO.NET và `SqlDataReader`.
+
+Endpoint:
+
+```http
+GET /api/ado-products/barcode/{barcode}
 ```
 
-Các thành phần chính:
+Kết quả trả về thông tin sản phẩm như mã vạch, tên sản phẩm, giá bán và số lượng tồn kho. Nếu không tìm thấy sản phẩm, API trả về `404 Not Found`.
 
-* `panelSidebar`: Thanh điều hướng.
-* `panelTopHeader`: Tiêu đề và thông tin người dùng.
-* `panelMainContent`: Vùng hiển thị Form nghiệp vụ.
+### 4.3. Stored Procedure báo cáo doanh thu
 
-Sidebar có chiều rộng **230px**, vùng nội dung sử dụng `Dock = Fill`.
+Tạo Stored Procedure `sp_GetRevenueByCashier` trên SQL Server để tổng hợp dữ liệu theo nhân viên thu ngân.
 
----
+Thông tin thống kê gồm:
 
-## 🔄 5. Nhúng Form con
+- Tên tài khoản thu ngân.
+- Tổng số hóa đơn.
+- Tổng doanh thu.
+- Tổng điểm thưởng đã cấp.
 
-Các Form nghiệp vụ được nhúng vào `panelMainContent` thay vì mở thành nhiều cửa sổ riêng.
+Endpoint:
 
-```csharp
-childForm.TopLevel = false;
-childForm.FormBorderStyle = FormBorderStyle.None;
-childForm.Dock = DockStyle.Fill;
+```http
+GET /api/Reports/revenue-by-cashier
 ```
 
-Hàm `OpenChildForm(...)` chịu trách nhiệm đóng Form đang mở và hiển thị Form mới.
+API sử dụng `CommandType.StoredProcedure` và `SqlDataReader` để lấy dữ liệu báo cáo, sau đó trả về JSON cho client.
 
----
+### 4.4. Giao dịch dữ liệu và chuẩn ACID
 
-## 👤 6. Phân quyền RBAC
+Tìm hiểu bốn đặc tính của giao dịch cơ sở dữ liệu:
 
-| Vai trò       | Quyền truy cập                                          |
-| ------------- | ------------------------------------------------------- |
-| **Admin**     | POS, Danh mục, Sản phẩm, Khách hàng, Báo cáo, Tài khoản |
-| **Cashier**   | POS, Khách hàng                                         |
-| **Warehouse** | Danh mục, Sản phẩm                                      |
+- **Atomicity:** Tất cả thao tác thành công hoặc cùng bị hủy.
+- **Consistency:** Dữ liệu luôn đảm bảo tính nhất quán.
+- **Isolation:** Các giao dịch được cô lập với nhau.
+- **Durability:** Dữ liệu được lưu bền vững sau khi xác nhận.
 
-Phân quyền được xử lý trong `ApplyRolePermissions()` bằng cách hiển thị hoặc ẩn các nút trên Sidebar.
+Sử dụng `SqlTransaction` với ba thao tác chính:
 
----
+- `BeginTransaction()`: Bắt đầu giao dịch.
+- `Commit()`: Xác nhận lưu dữ liệu.
+- `Rollback()`: Hoàn tác dữ liệu khi có lỗi.
 
-## 🔐 7. Tài khoản mẫu
+### 4.5. API thanh toán POS
 
-| Username       | Mật khẩu | Vai trò   |
-| -------------- | -------- | --------- |
-| `admin01`      | `123456` | Admin     |
-| `admin02`      | `123456` | Admin     |
-| `cashier01`    | `123456` | Cashier   |
-| `cashier02`    | `123456` | Cashier   |
-| `cashier03`    | `123456` | Cashier   |
-| `cashier04`    | `123456` | Cashier   |
-| `cashier05`    | `123456` | Cashier   |
-| `cashier06`    | `123456` | Cashier   |
-| `ware01`       | `123456` | Warehouse |
-| `ware02`       | `123456` | Warehouse |
-| `ware03`       | `123456` | Warehouse |
-| `ware04`       | `123456` | Warehouse |
-| `ware05`       | `123456` | Warehouse |
-| `admin_backup` | `123456` | Admin     |
-| `supervisor`   | `123456` | Admin     |
+Xây dựng API thanh toán hóa đơn với quy trình:
 
----
+1. Tạo hóa đơn trong bảng `Orders`.
+2. Lưu chi tiết sản phẩm vào `OrderDetails`.
+3. Kiểm tra và trừ số lượng tồn kho trong `Products`.
+4. Cộng điểm thưởng cho khách hàng trong `Customers`.
+5. `Commit` khi toàn bộ thao tác thành công; `Rollback` khi xảy ra lỗi.
 
-## 🧩 8. Các Form nghiệp vụ
+Endpoint:
 
-### FormPOS
-
-Dành cho **Admin và Cashier**.
-
-Chức năng:
-
-* Tìm sản phẩm theo Barcode.
-* Thêm sản phẩm vào giỏ hàng.
-* Tính tổng tiền và tiền thừa.
-* Nhập khách hàng thành viên.
-* Thanh toán đơn hàng.
-
-### FormProductManagement
-
-Dành cho **Admin và Warehouse**.
-
-Chức năng:
-
-* Xem và tìm kiếm sản phẩm.
-* Lọc theo nhóm hàng.
-* Thêm, sửa, xóa sản phẩm.
-* Quản lý giá bán và tồn kho.
-
-### FormCustomerManagement
-
-Dành cho **Admin và Cashier**.
-
-Chức năng:
-
-* Quản lý khách hàng.
-* Tra cứu khách hàng.
-* Quản lý thông tin khách hàng thân thiết.
-
-### FormUserManagement
-
-Dành cho **Admin**.
-
-Chức năng:
-
-* Xem danh sách tài khoản.
-* Tạo tài khoản.
-* Thiết lập mật khẩu và vai trò.
-* Quản lý trạng thái tài khoản.
-
-### FormQuickReport
-
-Dành cho **Admin**.
-
-Hiển thị:
-
-* Tổng số hóa đơn.
-* Tổng doanh thu.
-* Mặt hàng bán chạy nhất.
-
----
-
-## 🔗 9. Điều hướng
-
-Các nút trên Sidebar mở Form tương ứng:
-
-```text
-Bán hàng       → FormPOS
-Danh mục       → FormCategoryManagement
-Sản phẩm       → FormProductManagement
-Khách hàng     → FormCustomerManagement
-Báo cáo        → FormQuickReport
-Tài khoản       → FormUserManagement
+```http
+POST /api/checkout
 ```
 
-Các Form được mở thông qua:
-
-```csharp
-OpenChildForm(...)
-```
-
-và hiển thị trong `panelMainContent`.
+API sử dụng `SqlTransaction` để đảm bảo các thao tác thanh toán được thực hiện đồng bộ, tránh tình trạng hóa đơn đã tạo nhưng tồn kho hoặc chi tiết đơn hàng chưa được cập nhật.
 
 ---
 
-## 🧪 10. Kiểm thử phân quyền
+## 5. Kiểm thử chương trình
 
-### Cashier
+Kiểm thử các API bằng Swagger UI và đối chiếu dữ liệu trực tiếp trên SQL Server Management Studio (SSMS).
 
-```text
-cashier01 / 123456
+| Trường hợp | Kết quả mong đợi |
+|---|---|
+| Tra cứu Barcode hợp lệ | `200 OK` |
+| Barcode không tồn tại | `404 Not Found` |
+| Lấy báo cáo doanh thu | `200 OK` |
+| Thanh toán hợp lệ | `200 OK`, dữ liệu được lưu |
+| Mua vượt quá tồn kho | `400 Bad Request`, giao dịch được Rollback |
 
-✓ Bán hàng
-✓ Khách hàng
-✗ Danh mục
-✗ Sản phẩm
-✗ Báo cáo
-✗ Tài khoản
-```
-
-### Warehouse
-
-```text
-ware01 / 123456
-
-✓ Danh mục
-✓ Sản phẩm
-✗ Bán hàng
-✗ Khách hàng
-✗ Báo cáo
-✗ Tài khoản
-```
-
-### Admin
-
-```text
-admin01 / 123456
-
-✓ Bán hàng
-✓ Danh mục
-✓ Sản phẩm
-✓ Khách hàng
-✓ Báo cáo
-✓ Tài khoản
-```
+Khi thanh toán thất bại, cần kiểm tra để đảm bảo hóa đơn, chi tiết đơn hàng, tồn kho và điểm thưởng không bị thay đổi một phần.
 
 ---
 
-## 📈 11. Kết quả đạt được
+## 6. Kết quả và kiến thức đạt được
 
-Sau Buổi 4, hệ thống đã triển khai:
+Sau Buổi 5, sinh viên được thực hành:
 
-* `FormMainShell` và giao diện Sidebar.
-* Main Workspace để hiển thị Form nghiệp vụ.
-* Điều hướng giữa các Form.
-* Nhúng Form con bằng `TopLevel = false` và `Dock = Fill`.
-* Phân quyền Admin / Cashier / Warehouse.
-* Màn hình POS.
-* Quản lý sản phẩm.
-* Quản lý khách hàng.
-* Quản lý tài khoản.
-* Form báo cáo doanh thu.
+- Kết nối và truy vấn SQL Server bằng ADO.NET.
+- Sử dụng tham số SQL an toàn.
+- Tra cứu sản phẩm theo Barcode.
+- Xây dựng Stored Procedure và API báo cáo doanh thu.
+- Hiểu nguyên tắc ACID và điều khiển giao dịch.
+- Xây dựng API thanh toán POS có xử lý lỗi và Rollback.
+- Kiểm tra tính toàn vẹn dữ liệu bằng Swagger và SSMS.
 
 ---
 
-## 📚 12. Kiến thức đạt được
+## 7. Checklist kiểm tra
 
-* Single-Form Architecture trong WinForms.
-* Thiết kế giao diện bằng Panel và các Control.
-* Nhúng và điều hướng Form con.
-* Quản lý Session người dùng.
-* Xây dựng RBAC.
-* Phân quyền giao diện theo vai trò.
-* Kết nối WinForms với ASP.NET Core Web API.
+- [ ] Thực hành `ExecuteScalar()`, `ExecuteNonQuery()` và `ExecuteReader()`.
+- [ ] Kiểm thử API tra cứu Barcode.
+- [ ] Tạo và gọi Stored Procedure báo cáo doanh thu.
+- [ ] Hiểu và áp dụng `BeginTransaction()`, `Commit()` và `Rollback()`.
+- [ ] Kiểm thử API thanh toán POS thành công.
+- [ ] Kiểm thử trường hợp mua vượt quá tồn kho và xác nhận Rollback.
+- [ ] Đối chiếu dữ liệu sau giao dịch trên SQL Server. reamde ok ko
