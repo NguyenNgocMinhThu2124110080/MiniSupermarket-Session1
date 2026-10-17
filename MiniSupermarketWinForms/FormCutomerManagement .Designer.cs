@@ -40,6 +40,7 @@ namespace MiniSupermarketWinForms
         private System.Windows.Forms.Button   btnAdd;
         private System.Windows.Forms.Button   btnUpdate;
         private System.Windows.Forms.Button   btnDelete;
+        private System.Windows.Forms.Button   btnClear;
 
         protected override void Dispose(bool disposing)
         {
@@ -77,6 +78,7 @@ namespace MiniSupermarketWinForms
             this.btnAdd            = new System.Windows.Forms.Button();
             this.btnUpdate         = new System.Windows.Forms.Button();
             this.btnDelete         = new System.Windows.Forms.Button();
+            this.btnClear          = new System.Windows.Forms.Button();
 
             this.grpList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
@@ -176,12 +178,21 @@ namespace MiniSupermarketWinForms
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
 
-            this.dgvCustomers.Columns.Add("CustomerId",     "Mã KH");
-            this.dgvCustomers.Columns.Add("CustomerName",   "Tên khách hàng");
-            this.dgvCustomers.Columns.Add("PhoneNumber",    "Số điện thoại");
-            this.dgvCustomers.Columns.Add("Address",        "Địa chỉ");
-            this.dgvCustomers.Columns.Add("RewardPoints",   "Điểm tích lũy");
-            this.dgvCustomers.Columns.Add("MembershipRank", "Hạng thành viên");
+            var colId = new System.Windows.Forms.DataGridViewTextBoxColumn { Name = "CustomerId", HeaderText = "Mã KH", FillWeight = 9 };
+            var colName = new System.Windows.Forms.DataGridViewTextBoxColumn { Name = "CustomerName", HeaderText = "Tên khách hàng", FillWeight = 26 };
+            var colPhone = new System.Windows.Forms.DataGridViewTextBoxColumn { Name = "PhoneNumber", HeaderText = "Số điện thoại", FillWeight = 16 };
+            var colAddr = new System.Windows.Forms.DataGridViewTextBoxColumn { Name = "Address", HeaderText = "Địa chỉ", FillWeight = 29 };
+            var colPoints = new System.Windows.Forms.DataGridViewTextBoxColumn { Name = "RewardPoints", HeaderText = "Điểm tích lũy", FillWeight = 10 };
+            var colRank = new System.Windows.Forms.DataGridViewTextBoxColumn { Name = "MembershipRank", HeaderText = "Hạng thành viên", FillWeight = 14 };
+
+            colId.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            colPhone.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            colPoints.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            colRank.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+
+            this.dgvCustomers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+                colId, colName, colPhone, colAddr, colPoints, colRank
+            });
 
             this.dgvCustomers.CellClick +=
                 new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomers_CellClick);
@@ -190,74 +201,71 @@ namespace MiniSupermarketWinForms
             // GROUP BOX 2: THONG TIN (phai)
             // =====================================================
             this.grpDetail.Location = new System.Drawing.Point(702, 42);
-            this.grpDetail.Size     = new System.Drawing.Size(334, 445);
+            this.grpDetail.Size     = new System.Drawing.Size(300, 445);
             this.grpDetail.Text     = "Thông tin Khách hàng";
 
-            int labelX = 10, inputX = 120, inputW = 195, rowH = 32;
-
-            // Ma KH
+            // Stacked vertical layout
             this.lblCustomerId.AutoSize = true;
-            this.lblCustomerId.Location = new System.Drawing.Point(labelX, 25);
-            this.lblCustomerId.Text     = "Mã KH";
-            this.txtCustomerId.Location = new System.Drawing.Point(inputX, 22);
-            this.txtCustomerId.Size     = new System.Drawing.Size(inputW, 20);
+            this.lblCustomerId.Location = new System.Drawing.Point(18, 22);
+            this.lblCustomerId.Text     = "Mã KH:";
+            this.txtCustomerId.Location = new System.Drawing.Point(18, 40);
+            this.txtCustomerId.Size     = new System.Drawing.Size(260, 22);
             this.txtCustomerId.ReadOnly = true;
 
-            // Ten
             this.lblCustomerName.AutoSize = true;
-            this.lblCustomerName.Location = new System.Drawing.Point(labelX, 25 + rowH);
-            this.lblCustomerName.Text     = "Tên khách hàng";
-            this.txtCustomerName.Location = new System.Drawing.Point(inputX, 22 + rowH);
-            this.txtCustomerName.Size     = new System.Drawing.Size(inputW, 20);
+            this.lblCustomerName.Location = new System.Drawing.Point(18, 68);
+            this.lblCustomerName.Text     = "Tên khách hàng:";
+            this.txtCustomerName.Location = new System.Drawing.Point(18, 86);
+            this.txtCustomerName.Size     = new System.Drawing.Size(260, 22);
 
-            // SDT
             this.lblPhoneNumber.AutoSize = true;
-            this.lblPhoneNumber.Location = new System.Drawing.Point(labelX, 25 + rowH * 2);
-            this.lblPhoneNumber.Text     = "Số điện thoại";
-            this.txtPhoneNumber.Location = new System.Drawing.Point(inputX, 22 + rowH * 2);
-            this.txtPhoneNumber.Size     = new System.Drawing.Size(inputW, 20);
+            this.lblPhoneNumber.Location = new System.Drawing.Point(18, 114);
+            this.lblPhoneNumber.Text     = "Số điện thoại:";
+            this.txtPhoneNumber.Location = new System.Drawing.Point(18, 132);
+            this.txtPhoneNumber.Size     = new System.Drawing.Size(260, 22);
 
-            // Dia chi
             this.lblAddress.AutoSize = true;
-            this.lblAddress.Location = new System.Drawing.Point(labelX, 25 + rowH * 3);
-            this.lblAddress.Text     = "Địa chỉ";
-            this.txtAddress.Location = new System.Drawing.Point(inputX, 22 + rowH * 3);
-            this.txtAddress.Size     = new System.Drawing.Size(inputW, 20);
+            this.lblAddress.Location = new System.Drawing.Point(18, 160);
+            this.lblAddress.Text     = "Địa chỉ:";
+            this.txtAddress.Location = new System.Drawing.Point(18, 178);
+            this.txtAddress.Size     = new System.Drawing.Size(260, 22);
 
-            // Diem
             this.lblRewardPoints.AutoSize = true;
-            this.lblRewardPoints.Location = new System.Drawing.Point(labelX, 25 + rowH * 4);
-            this.lblRewardPoints.Text     = "Điểm tích lũy";
-            this.txtRewardPoints.Location = new System.Drawing.Point(inputX, 22 + rowH * 4);
-            this.txtRewardPoints.Size     = new System.Drawing.Size(inputW, 20);
+            this.lblRewardPoints.Location = new System.Drawing.Point(18, 206);
+            this.lblRewardPoints.Text     = "Điểm tích lũy:";
+            this.txtRewardPoints.Location = new System.Drawing.Point(18, 224);
+            this.txtRewardPoints.Size     = new System.Drawing.Size(260, 22);
 
-            // Hang
             this.lblMembershipRank.AutoSize = true;
-            this.lblMembershipRank.Location = new System.Drawing.Point(labelX, 25 + rowH * 5);
-            this.lblMembershipRank.Text     = "Hạng thành viên";
-            this.txtMembershipRank.Location = new System.Drawing.Point(inputX, 22 + rowH * 5);
-            this.txtMembershipRank.Size     = new System.Drawing.Size(inputW, 20);
+            this.lblMembershipRank.Location = new System.Drawing.Point(18, 252);
+            this.lblMembershipRank.Text     = "Hạng thành viên:";
+            this.txtMembershipRank.Location = new System.Drawing.Point(18, 270);
+            this.txtMembershipRank.Size     = new System.Drawing.Size(260, 22);
 
-            // Nut hanh dong
-            int btnY = 22 + rowH * 6 + 10;
-
-            this.btnAdd.Location               = new System.Drawing.Point(10,  btnY);
-            this.btnAdd.Size                   = new System.Drawing.Size(90, 26);
+            // 4 Styled Buttons
+            this.btnAdd.Location               = new System.Drawing.Point(18, 316);
+            this.btnAdd.Size                   = new System.Drawing.Size(125, 34);
             this.btnAdd.Text                   = "Thêm mới";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click                 += new System.EventHandler(this.btnAdd_Click);
 
-            this.btnUpdate.Location               = new System.Drawing.Point(108, btnY);
-            this.btnUpdate.Size                   = new System.Drawing.Size(90, 26);
+            this.btnUpdate.Location               = new System.Drawing.Point(153, 316);
+            this.btnUpdate.Size                   = new System.Drawing.Size(125, 34);
             this.btnUpdate.Text                   = "Cập nhật";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click                 += new System.EventHandler(this.btnUpdate_Click);
 
-            this.btnDelete.Location               = new System.Drawing.Point(206, btnY);
-            this.btnDelete.Size                   = new System.Drawing.Size(90, 26);
+            this.btnDelete.Location               = new System.Drawing.Point(18, 360);
+            this.btnDelete.Size                   = new System.Drawing.Size(125, 34);
             this.btnDelete.Text                   = "Xóa";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click                 += new System.EventHandler(this.btnDelete_Click);
+
+            this.btnClear.Location                = new System.Drawing.Point(153, 360);
+            this.btnClear.Size                    = new System.Drawing.Size(125, 34);
+            this.btnClear.Text                    = "Làm mới";
+            this.btnClear.UseVisualStyleBackColor  = true;
+            this.btnClear.Click                  += new System.EventHandler(this.btnClear_Click);
 
             // Them vao grpDetail
             this.grpDetail.Controls.Add(this.lblCustomerId);
@@ -275,6 +283,7 @@ namespace MiniSupermarketWinForms
             this.grpDetail.Controls.Add(this.btnAdd);
             this.grpDetail.Controls.Add(this.btnUpdate);
             this.grpDetail.Controls.Add(this.btnDelete);
+            this.grpDetail.Controls.Add(this.btnClear);
 
             // =====================================================
             // THEM VAO FORM

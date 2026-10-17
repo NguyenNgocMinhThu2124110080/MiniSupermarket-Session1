@@ -24,12 +24,12 @@ namespace MiniSupermarketWinForms
         {
             InitializeComponent();
             UiTheme.StyleGrid(dgvProducts);
-            dgvProducts.RowTemplate.Height = 42;
+            dgvProducts.RowTemplate.Height = 28;
             dgvProducts.DataBindingComplete += (s, e) =>
             {
                 foreach (DataGridViewRow r in dgvProducts.Rows)
                 {
-                    r.Height = 42;
+                    r.Height = 28;
                 }
                 if (dgvProducts.Columns["ProductName"] != null)
                 {

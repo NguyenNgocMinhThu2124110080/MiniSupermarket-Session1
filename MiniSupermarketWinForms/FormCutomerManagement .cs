@@ -25,12 +25,12 @@ namespace MiniSupermarketWinForms
         {
             InitializeComponent();
             UiTheme.StyleGrid(dgvCustomers);
-            dgvCustomers.RowTemplate.Height = 42;
+            dgvCustomers.RowTemplate.Height = 28;
             dgvCustomers.DataBindingComplete += (s, e) =>
             {
                 foreach (DataGridViewRow r in dgvCustomers.Rows)
                 {
-                    r.Height = 42;
+                    r.Height = 28;
                 }
             };
         }
@@ -94,7 +94,7 @@ namespace MiniSupermarketWinForms
                         }
                         foreach (DataGridViewRow r in dgvCustomers.Rows)
                         {
-                            r.Height = 42;
+                            r.Height = 28;
                         }
                     }
                     else
@@ -324,6 +324,11 @@ namespace MiniSupermarketWinForms
         {
             _currentPage = 1;
             await LoadDataAsync();
+        }
+
+                private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearInputs();
         }
 
         // =========================================================

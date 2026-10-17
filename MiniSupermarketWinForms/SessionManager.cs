@@ -116,18 +116,19 @@ namespace MiniSupermarketWinForms
         {
             dgv.BackgroundColor = System.Drawing.Color.White;
             dgv.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dgv.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Regular);
+            dgv.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular);
             dgv.EnableHeadersVisualStyles = false;
             dgv.ColumnHeadersDefaultCellStyle.BackColor = Primary;
             dgv.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
-            dgv.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
-            dgv.ColumnHeadersHeight = 40;
+            dgv.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            dgv.ColumnHeadersDefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            dgv.ColumnHeadersHeight = 34;
             dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgv.RowTemplate.Height = 36;
+            dgv.RowTemplate.Height = 28;
             dgv.AlternatingRowsDefaultCellStyle.BackColor = GridAlt;
             dgv.DefaultCellStyle.SelectionBackColor = Accent;
             dgv.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
-            dgv.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Regular);
+            dgv.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular);
             dgv.RowHeadersVisible = false;
             dgv.ReadOnly = true;
             dgv.AllowUserToAddRows = false;
@@ -137,7 +138,7 @@ namespace MiniSupermarketWinForms
             {
                 foreach (System.Windows.Forms.DataGridViewRow r in dgv.Rows)
                 {
-                    r.Height = 36;
+                    r.Height = 28;
                 }
                 foreach (System.Windows.Forms.DataGridViewColumn col in dgv.Columns)
                 {
