@@ -25,6 +25,14 @@ namespace MiniSupermarketWinForms
         {
             InitializeComponent();
             UiTheme.StyleGrid(dgvCustomers);
+            dgvCustomers.RowTemplate.Height = 42;
+            dgvCustomers.DataBindingComplete += (s, e) =>
+            {
+                foreach (DataGridViewRow r in dgvCustomers.Rows)
+                {
+                    r.Height = 42;
+                }
+            };
         }
 
         // Tao HttpClient co dinh kem JWT Token tu SessionManager
@@ -83,6 +91,10 @@ namespace MiniSupermarketWinForms
                                 c.RewardPoints,
                                 c.MembershipRank
                             );
+                        }
+                        foreach (DataGridViewRow r in dgvCustomers.Rows)
+                        {
+                            r.Height = 42;
                         }
                     }
                     else

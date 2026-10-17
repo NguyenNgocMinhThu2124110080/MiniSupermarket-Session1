@@ -25,6 +25,23 @@ namespace MiniSupermarketWinForms
         {
             InitializeComponent();
             UiTheme.StyleGrid(dgvCategories);
+            dgvCategories.RowTemplate.Height = 42;
+            dgvCategories.DataBindingComplete += (s, e) =>
+            {
+                foreach (DataGridViewRow r in dgvCategories.Rows)
+                {
+                    r.Height = 42;
+                }
+                if (dgvCategories.Columns["CategoryName"] != null)
+                {
+                    dgvCategories.Columns["CategoryId"].FillWeight = 15;
+                    dgvCategories.Columns["CategoryId"].HeaderText = "Mã nhóm";
+                    dgvCategories.Columns["CategoryName"].FillWeight = 35;
+                    dgvCategories.Columns["CategoryName"].HeaderText = "Tên nhóm hàng";
+                    dgvCategories.Columns["Description"].FillWeight = 50;
+                    dgvCategories.Columns["Description"].HeaderText = "Mô tả chi tiết";
+                }
+            };
         }
 
         // Bổ sung phương thức cấu hình HttpClient có gắn kèm Token bảo mật

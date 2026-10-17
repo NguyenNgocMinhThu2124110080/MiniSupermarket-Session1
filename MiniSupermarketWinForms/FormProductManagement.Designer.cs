@@ -202,16 +202,16 @@ namespace MiniSupermarketWinForms
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Location = new System.Drawing.Point(685, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(287, 560);
+            this.groupBox2.Size = new System.Drawing.Size(320, 560);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Thông Tin Sản Phẩm";
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(152, 348);
+            this.btnRefresh.Location = new System.Drawing.Point(165, 430);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(110, 35);
+            this.btnRefresh.Size = new System.Drawing.Size(130, 42);
             this.btnRefresh.TabIndex = 13;
             this.btnRefresh.Text = "Làm Mới (Refresh)";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -219,9 +219,9 @@ namespace MiniSupermarketWinForms
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(22, 348);
+            this.btnDelete.Location = new System.Drawing.Point(20, 430);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(110, 35);
+            this.btnDelete.Size = new System.Drawing.Size(130, 42);
             this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "Xóa (Delete)";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -229,9 +229,9 @@ namespace MiniSupermarketWinForms
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(152, 298);
+            this.btnUpdate.Location = new System.Drawing.Point(165, 375);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(110, 35);
+            this.btnUpdate.Size = new System.Drawing.Size(130, 42);
             this.btnUpdate.TabIndex = 11;
             this.btnUpdate.Text = "Cập Nhật (Update)";
             this.btnUpdate.UseVisualStyleBackColor = true;
@@ -239,9 +239,9 @@ namespace MiniSupermarketWinForms
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(22, 298);
+            this.btnAdd.Location = new System.Drawing.Point(20, 375);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(110, 35);
+            this.btnAdd.Size = new System.Drawing.Size(130, 42);
             this.btnAdd.TabIndex = 10;
             this.btnAdd.Text = "Thêm Mới (Add)";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -251,15 +251,15 @@ namespace MiniSupermarketWinForms
             // 
             this.cboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCategory.FormattingEnabled = true;
-            this.cboCategory.Location = new System.Drawing.Point(22, 246);
+            this.cboCategory.Location = new System.Drawing.Point(20, 312);
             this.cboCategory.Name = "cboCategory";
-            this.cboCategory.Size = new System.Drawing.Size(240, 23);
+            this.cboCategory.Size = new System.Drawing.Size(275, 23);
             this.cboCategory.TabIndex = 9;
             // 
             // lblCategory
             // 
             this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(19, 230);
+            this.lblCategory.Location = new System.Drawing.Point(18, 292);
             this.lblCategory.Name = "lblCategory";
             this.lblCategory.Size = new System.Drawing.Size(65, 15);
             this.lblCategory.TabIndex = 8;
@@ -267,15 +267,15 @@ namespace MiniSupermarketWinForms
             // 
             // txtStockQuantity
             // 
-            this.txtStockQuantity.Location = new System.Drawing.Point(22, 196);
+            this.txtStockQuantity.Location = new System.Drawing.Point(20, 247);
             this.txtStockQuantity.Name = "txtStockQuantity";
-            this.txtStockQuantity.Size = new System.Drawing.Size(240, 23);
+            this.txtStockQuantity.Size = new System.Drawing.Size(275, 23);
             this.txtStockQuantity.TabIndex = 7;
             // 
             // lblStockQuantity
             // 
             this.lblStockQuantity.AutoSize = true;
-            this.lblStockQuantity.Location = new System.Drawing.Point(19, 180);
+            this.lblStockQuantity.Location = new System.Drawing.Point(18, 227);
             this.lblStockQuantity.Name = "lblStockQuantity";
             this.lblStockQuantity.Size = new System.Drawing.Size(79, 15);
             this.lblStockQuantity.TabIndex = 6;
@@ -283,15 +283,15 @@ namespace MiniSupermarketWinForms
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(22, 146);
+            this.txtPrice.Location = new System.Drawing.Point(20, 182);
             this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(240, 23);
+            this.txtPrice.Size = new System.Drawing.Size(275, 23);
             this.txtPrice.TabIndex = 5;
             // 
             // lblPrice
             // 
             this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(19, 130);
+            this.lblPrice.Location = new System.Drawing.Point(18, 162);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(53, 15);
             this.lblPrice.TabIndex = 4;
@@ -299,15 +299,15 @@ namespace MiniSupermarketWinForms
             // 
             // txtProductName
             // 
-            this.txtProductName.Location = new System.Drawing.Point(22, 96);
+            this.txtProductName.Location = new System.Drawing.Point(20, 117);
             this.txtProductName.Name = "txtProductName";
-            this.txtProductName.Size = new System.Drawing.Size(240, 23);
+            this.txtProductName.Size = new System.Drawing.Size(275, 23);
             this.txtProductName.TabIndex = 3;
             // 
             // lblProductName
             // 
             this.lblProductName.AutoSize = true;
-            this.lblProductName.Location = new System.Drawing.Point(19, 80);
+            this.lblProductName.Location = new System.Drawing.Point(18, 97);
             this.lblProductName.Name = "lblProductName";
             this.lblProductName.Size = new System.Drawing.Size(84, 15);
             this.lblProductName.TabIndex = 2;
@@ -315,15 +315,15 @@ namespace MiniSupermarketWinForms
             // 
             // txtBarcode
             // 
-            this.txtBarcode.Location = new System.Drawing.Point(22, 46);
+            this.txtBarcode.Location = new System.Drawing.Point(20, 52);
             this.txtBarcode.Name = "txtBarcode";
-            this.txtBarcode.Size = new System.Drawing.Size(240, 23);
+            this.txtBarcode.Size = new System.Drawing.Size(275, 23);
             this.txtBarcode.TabIndex = 1;
             // 
             // lblBarcode
             // 
             this.lblBarcode.AutoSize = true;
-            this.lblBarcode.Location = new System.Drawing.Point(19, 30);
+            this.lblBarcode.Location = new System.Drawing.Point(18, 32);
             this.lblBarcode.Name = "lblBarcode";
             this.lblBarcode.Size = new System.Drawing.Size(56, 15);
             this.lblBarcode.TabIndex = 0;

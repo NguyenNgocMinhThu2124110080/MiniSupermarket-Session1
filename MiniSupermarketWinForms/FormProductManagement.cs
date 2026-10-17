@@ -24,6 +24,31 @@ namespace MiniSupermarketWinForms
         {
             InitializeComponent();
             UiTheme.StyleGrid(dgvProducts);
+            dgvProducts.RowTemplate.Height = 42;
+            dgvProducts.DataBindingComplete += (s, e) =>
+            {
+                foreach (DataGridViewRow r in dgvProducts.Rows)
+                {
+                    r.Height = 42;
+                }
+                if (dgvProducts.Columns["ProductName"] != null)
+                {
+                    dgvProducts.Columns["ProductId"].FillWeight = 8;
+                    dgvProducts.Columns["ProductId"].HeaderText = "Mã SP";
+                    dgvProducts.Columns["Barcode"].FillWeight = 14;
+                    dgvProducts.Columns["Barcode"].HeaderText = "Mã vạch";
+                    dgvProducts.Columns["ProductName"].FillWeight = 38;
+                    dgvProducts.Columns["ProductName"].HeaderText = "Tên sản phẩm";
+                    dgvProducts.Columns["Price"].FillWeight = 12;
+                    dgvProducts.Columns["Price"].HeaderText = "Đơn giá";
+                    dgvProducts.Columns["StockQuantity"].FillWeight = 10;
+                    dgvProducts.Columns["StockQuantity"].HeaderText = "Tồn kho";
+                    dgvProducts.Columns["CategoryId"].FillWeight = 8;
+                    dgvProducts.Columns["CategoryId"].HeaderText = "Mã nhóm";
+                    dgvProducts.Columns["CategoryName"].FillWeight = 20;
+                    dgvProducts.Columns["CategoryName"].HeaderText = "Nhóm hàng";
+                }
+            };
         }
 
         private async void FormProductManagement_Load(object sender, EventArgs e)
