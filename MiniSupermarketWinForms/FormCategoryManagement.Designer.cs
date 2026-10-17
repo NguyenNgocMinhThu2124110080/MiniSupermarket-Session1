@@ -64,11 +64,11 @@ namespace MiniSupermarketWinForms
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(56, 25);
+            this.label1.Location = new System.Drawing.Point(20, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 13);
+            this.label1.Size = new System.Drawing.Size(115, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Tìm kiém";
+            this.label1.Text = "Tìm kiếm nhóm hàng:";
             // 
             // toolStrip1
             // 
@@ -80,16 +80,16 @@ namespace MiniSupermarketWinForms
             // 
             // txtKeyword
             // 
-            this.txtKeyword.Location = new System.Drawing.Point(59, 42);
+            this.txtKeyword.Location = new System.Drawing.Point(20, 42);
             this.txtKeyword.Name = "txtKeyword";
-            this.txtKeyword.Size = new System.Drawing.Size(228, 20);
+            this.txtKeyword.Size = new System.Drawing.Size(240, 20);
             this.txtKeyword.TabIndex = 2;
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(299, 42);
+            this.btnSearch.Location = new System.Drawing.Point(270, 40);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnSearch.Size = new System.Drawing.Size(80, 26);
             this.btnSearch.TabIndex = 3;
             this.btnSearch.Text = "Tìm kiếm";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -97,19 +97,19 @@ namespace MiniSupermarketWinForms
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(380, 42);
+            this.btnLoad.Location = new System.Drawing.Point(358, 40);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(75, 23);
+            this.btnLoad.Size = new System.Drawing.Size(80, 26);
             this.btnLoad.TabIndex = 4;
-            this.btnLoad.Text = "Tải lại\r\n";
+            this.btnLoad.Text = "Tải lại";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // btnOpenCustomer
             // 
-            this.btnOpenCustomer.Location = new System.Drawing.Point(470, 42);
+            this.btnOpenCustomer.Location = new System.Drawing.Point(450, 40);
             this.btnOpenCustomer.Name = "btnOpenCustomer";
-            this.btnOpenCustomer.Size = new System.Drawing.Size(130, 23);
+            this.btnOpenCustomer.Size = new System.Drawing.Size(140, 26);
             this.btnOpenCustomer.TabIndex = 10;
             this.btnOpenCustomer.Text = "Quản lý Khách hàng";
             this.btnOpenCustomer.BackColor = System.Drawing.Color.SteelBlue;
@@ -121,10 +121,11 @@ namespace MiniSupermarketWinForms
             // 
             this.groupBox1.Controls.Add(this.dgvCategories);
             this.groupBox1.Controls.Add(this.panelPaging);
+            this.panelPaging.SendToBack();
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Location = new System.Drawing.Point(59, 94);
+            this.groupBox1.Location = new System.Drawing.Point(20, 80);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(396, 280);
+            this.groupBox1.Size = new System.Drawing.Size(460, 380);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Danh sách nhóm hàng";
@@ -136,7 +137,7 @@ namespace MiniSupermarketWinForms
             this.dgvCategories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCategories.Location = new System.Drawing.Point(3, 16);
             this.dgvCategories.Name = "dgvCategories";
-            this.dgvCategories.Size = new System.Drawing.Size(390, 222);
+            this.dgvCategories.Size = new System.Drawing.Size(454, 321);
             this.dgvCategories.TabIndex = 0;
             this.dgvCategories.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategories_CellClick);
             // 
@@ -146,9 +147,9 @@ namespace MiniSupermarketWinForms
             this.panelPaging.Controls.Add(this.lblPaging);
             this.panelPaging.Controls.Add(this.btnPrev);
             this.panelPaging.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelPaging.Location = new System.Drawing.Point(3, 238);
+            this.panelPaging.Location = new System.Drawing.Point(3, 337);
             this.panelPaging.Name = "panelPaging";
-            this.panelPaging.Size = new System.Drawing.Size(390, 39);
+            this.panelPaging.Size = new System.Drawing.Size(454, 40);
             this.panelPaging.TabIndex = 2;
             // 
             // btnPrev
@@ -193,18 +194,18 @@ namespace MiniSupermarketWinForms
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Location = new System.Drawing.Point(461, 94);
+            this.groupBox2.Location = new System.Drawing.Point(490, 80);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(269, 280);
+            this.groupBox2.Size = new System.Drawing.Size(260, 380);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Thông tin Nhóm hàng";
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(175, 217);
+            this.btnDelete.Location = new System.Drawing.Point(171, 275);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.Size = new System.Drawing.Size(72, 30);
             this.btnDelete.TabIndex = 9;
             this.btnDelete.Text = "Xóa";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -212,9 +213,9 @@ namespace MiniSupermarketWinForms
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(94, 217);
+            this.btnUpdate.Location = new System.Drawing.Point(92, 275);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdate.Size = new System.Drawing.Size(72, 30);
             this.btnUpdate.TabIndex = 8;
             this.btnUpdate.Text = "Cập nhật";
             this.btnUpdate.UseVisualStyleBackColor = true;
@@ -222,9 +223,9 @@ namespace MiniSupermarketWinForms
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(13, 217);
+            this.btnAdd.Location = new System.Drawing.Point(13, 275);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.Size = new System.Drawing.Size(72, 30);
             this.btnAdd.TabIndex = 7;
             this.btnAdd.Text = "Thêm mới";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -232,10 +233,10 @@ namespace MiniSupermarketWinForms
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(16, 154);
+            this.txtDescription.Location = new System.Drawing.Point(16, 160);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(234, 44);
+            this.txtDescription.Size = new System.Drawing.Size(230, 95);
             this.txtDescription.TabIndex = 6;
             // 
             // txtCategoryName
@@ -285,7 +286,7 @@ namespace MiniSupermarketWinForms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(759, 411);
+            this.ClientSize = new System.Drawing.Size(770, 480);
             this.Controls.Add(this.btnOpenCustomer);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

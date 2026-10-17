@@ -116,15 +116,18 @@ namespace MiniSupermarketWinForms
         {
             dgv.BackgroundColor = System.Drawing.Color.White;
             dgv.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dgv.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Regular);
             dgv.EnableHeadersVisualStyles = false;
             dgv.ColumnHeadersDefaultCellStyle.BackColor = Primary;
             dgv.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
-            dgv.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            dgv.ColumnHeadersHeight = 34;
+            dgv.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
+            dgv.ColumnHeadersHeight = 40;
             dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgv.RowTemplate.Height = 36;
             dgv.AlternatingRowsDefaultCellStyle.BackColor = GridAlt;
             dgv.DefaultCellStyle.SelectionBackColor = Accent;
             dgv.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            dgv.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Regular);
             dgv.RowHeadersVisible = false;
             dgv.ReadOnly = true;
             dgv.AllowUserToAddRows = false;
@@ -132,6 +135,10 @@ namespace MiniSupermarketWinForms
             dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             dgv.DataBindingComplete += (s, e) =>
             {
+                foreach (System.Windows.Forms.DataGridViewRow r in dgv.Rows)
+                {
+                    r.Height = 36;
+                }
                 foreach (System.Windows.Forms.DataGridViewColumn col in dgv.Columns)
                 {
                     string key = string.IsNullOrEmpty(col.DataPropertyName) ? col.Name : col.DataPropertyName;

@@ -147,6 +147,7 @@ namespace MiniSupermarketWinForms
             this.panelPaging.Name = "panelPaging";
             this.panelPaging.Size = new System.Drawing.Size(674, 39);
             this.panelPaging.TabIndex = 2;
+            this.panelPaging.BringToFront();
 
             // btnPrev
             this.btnPrev.Location = new System.Drawing.Point(10, 6);
