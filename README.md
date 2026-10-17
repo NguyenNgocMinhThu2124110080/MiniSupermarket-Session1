@@ -1,171 +1,199 @@
-
 # 🛒 BÁCH HÓA TỔNG HỢP HOÀNG DUNG
 
 ## Xây dựng Ứng dụng Quản lý Cửa hàng Tiện lợi với ASP.NET Core và Windows Forms
 
 **Môn học:** Lập trình Ứng dụng .NET Core  
-**Mã môn:** 229162  
-**Buổi:** 5  
-**Nội dung:** ADO.NET nâng cao, Stored Procedure và giao dịch thanh toán POS
+**Mã môn học:** 229162  
+**Buổi thực hành:** Buổi 6  
+**Nội dung:** Entity Framework Core nâng cao, phân trang LINQ và tích hợp hệ thống POS Client – Server  
 
 ---
 
-## 1. Thông tin sinh viên
+## 1. THÔNG TIN SINH VIÊN
 
 - **Họ và tên:** Nguyễn Ngọc Minh Thư
-- **MSSV:** 2124110080
+- **Mã số sinh viên:** 2124110080
 - **Lớp:** CCQ2411C
+- **Đề tài:** Bách hóa Tổng hợp Hoàng Dung
+- **Dự án:** MiniSupermarket
 
 ---
 
-## 2. Giới thiệu
+## 2. GIỚI THIỆU
 
-Buổi 5 tập trung nâng cao kỹ năng truy xuất dữ liệu SQL Server bằng ADO.NET, tối ưu truy vấn và đảm bảo tính toàn vẹn dữ liệu trong nghiệp vụ bán hàng.
+Buổi 6 tiếp tục phát triển hệ thống quản lý cửa hàng tiện lợi MiniSupermarket, tập trung vào tối ưu truy vấn dữ liệu sản phẩm và kết nối giữa ứng dụng Windows Forms với ASP.NET Core Web API.
 
-Các nội dung chính gồm:
-
-- Sử dụng ADO.NET để kết nối và thao tác SQL Server.
-- Tra cứu sản phẩm bằng mã vạch Barcode.
-- Tạo Stored Procedure thống kê doanh thu.
-- Áp dụng nguyên tắc ACID và `SqlTransaction`.
-- Xây dựng API thanh toán POS có cơ chế `Commit` và `Rollback`.
-
-## 3. Công nghệ sử dụng
-
-- C# và .NET
-- ASP.NET Core Web API
-- Windows Forms (WinForms)
-- Microsoft SQL Server
-- ADO.NET (`SqlConnection`, `SqlCommand`, `SqlParameter`, `SqlDataReader`)
-- Stored Procedure
-- Swagger UI
+Hệ thống sử dụng Entity Framework Core để truy xuất dữ liệu SQL Server, hỗ trợ tìm kiếm, phân trang sản phẩm và hiển thị dữ liệu trực tiếp trên giao diện WinForms.
 
 ---
 
-## 4. Nội dung thực hiện
+## 3. CÔNG NGHỆ SỬ DỤNG
 
-### 4.1. ADO.NET cơ bản
+- **Ngôn ngữ:** C#
+- **Backend:** ASP.NET Core Web API
+- **Frontend:** Windows Forms (WinForms)
+- **Cơ sở dữ liệu:** Microsoft SQL Server
+- **ORM:** Entity Framework Core
+- **Truy vấn:** LINQ, Eager Loading
+- **Giao tiếp:** HttpClient, JSON
+- **Bảo mật:** JWT Bearer Token
+- **Kiểm thử API:** Swagger UI
+- **IDE:** Visual Studio
 
-Tìm hiểu các thành phần chính:
+---
 
-| Thành phần | Chức năng |
+## 4. NỘI DUNG THỰC HIỆN BUỔI 6
+
+### 4.1. Entity Framework Core nâng cao
+
+Áp dụng các kỹ thuật truy vấn dữ liệu:
+
+- `Include()` để lấy thông tin nhóm hàng liên quan đến sản phẩm.
+- `ThenInclude()` để tải các quan hệ lồng nhau khi cần.
+- `AsNoTracking()` để tối ưu truy vấn chỉ đọc.
+- `CountAsync()` để đếm số sản phẩm.
+- `ToListAsync()` để lấy danh sách bất đồng bộ.
+
+Giúp hạn chế truy vấn không cần thiết và cải thiện hiệu suất xử lý dữ liệu.
+
+### 4.2. Xây dựng API tìm kiếm và phân trang sản phẩm
+
+**Endpoint:**
+
+`GET /api/products/paged`
+
+**Tham số:**
+
+| Tham số | Chức năng |
 |---|---|
-| `SqlConnection` | Kết nối SQL Server |
-| `SqlCommand` | Thực thi câu lệnh SQL |
-| `SqlParameter` | Truyền tham số an toàn |
-| `SqlDataReader` | Đọc dữ liệu từng dòng |
-| `DataTable` | Lưu dữ liệu dạng bảng trên RAM |
+| `keyword` | Tìm theo tên sản phẩm hoặc mã vạch |
+| `pageNumber` | Số trang hiện tại |
+| `pageSize` | Số sản phẩm trên mỗi trang |
 
-Phân biệt ba phương thức thực thi:
+Áp dụng LINQ:
 
-- `ExecuteScalar()`: Lấy một giá trị đơn.
-- `ExecuteNonQuery()`: Thêm, sửa hoặc xóa dữ liệu.
-- `ExecuteReader()`: Đọc nhiều dòng dữ liệu.
+- `Where()` và `Contains()` để tìm kiếm.
+- `OrderBy()` để sắp xếp sản phẩm.
+- `Skip()` để bỏ qua các sản phẩm thuộc trang trước.
+- `Take()` để lấy số lượng sản phẩm cần hiển thị.
 
-Sử dụng `SqlParameter` để hạn chế nguy cơ SQL Injection.
+**Ví dụ:**
 
-### 4.2. Tra cứu sản phẩm bằng Barcode
+`GET /api/products/paged?pageNumber=1&pageSize=10`
 
-Xây dựng API tra cứu sản phẩm trực tiếp bằng ADO.NET và `SqlDataReader`.
+API trả về dữ liệu gồm:
 
-Endpoint:
+- `CurrentPage`: Trang hiện tại.
+- `PageSize`: Số sản phẩm mỗi trang.
+- `TotalItems`: Tổng số sản phẩm.
+- `TotalPages`: Tổng số trang.
+- `Items`: Danh sách sản phẩm của trang hiện tại.
 
-```http
-GET /api/ado-products/barcode/{barcode}
-```
+### 4.3. Tạo DTO dữ liệu phân trang
 
-Kết quả trả về thông tin sản phẩm như mã vạch, tên sản phẩm, giá bán và số lượng tồn kho. Nếu không tìm thấy sản phẩm, API trả về `404 Not Found`.
+Bổ sung các lớp DTO:
 
-### 4.3. Stored Procedure báo cáo doanh thu
+- `ProductItemDto`: Chứa thông tin sản phẩm và tên nhóm hàng (`CategoryName`).
+- `PagedResult<T>`: Đóng gói danh sách sản phẩm cùng thông tin phân trang.
 
-Tạo Stored Procedure `sp_GetRevenueByCashier` trên SQL Server để tổng hợp dữ liệu theo nhân viên thu ngân.
+Việc sử dụng DTO giúp dữ liệu API trả về rõ ràng, dễ xử lý và phù hợp với giao diện WinForms.
 
-Thông tin thống kê gồm:
+### 4.4. Kết nối WinForms với Web API
 
-- Tên tài khoản thu ngân.
-- Tổng số hóa đơn.
-- Tổng doanh thu.
-- Tổng điểm thưởng đã cấp.
+Sử dụng lớp `ApiClientService` / `SessionManager` để quản lý `HttpClient` dùng chung.
 
-Endpoint:
+Các chức năng chính:
 
-```http
-GET /api/Reports/revenue-by-cashier
-```
+- Thiết lập địa chỉ Web API (`https://localhost:7006/api/`).
+- Gửi HTTP Request đến Backend.
+- Nhận dữ liệu JSON.
+- Đính kèm JWT Bearer Token khi cần xác thực.
+- Sử dụng `async/await` để tránh treo giao diện.
 
-API sử dụng `CommandType.StoredProcedure` và `SqlDataReader` để lấy dữ liệu báo cáo, sau đó trả về JSON cho client.
+### 4.5. Hoàn thiện giao diện quản lý sản phẩm
 
-### 4.4. Giao dịch dữ liệu và chuẩn ACID
+**FormProductManagement** được phát triển với các chức năng:
 
-Tìm hiểu bốn đặc tính của giao dịch cơ sở dữ liệu:
+- Hiển thị danh sách sản phẩm bằng `DataGridView` với layout chuẩn cân đối (chiều cao dòng 30px, tiêu đề 34px).
+- Tải danh mục sản phẩm vào `ComboBox`.
+- Tìm kiếm sản phẩm theo tên hoặc mã vạch.
+- Phân trang danh sách sản phẩm (10 sản phẩm/trang).
+- Chuyển trang trước (`<< Trang trước`) và trang sau (`Trang sau >>`).
+- Thêm sản phẩm mới.
+- Cập nhật thông tin sản phẩm.
+- Xóa sản phẩm.
+- Đồng bộ dữ liệu với SQL Server thông qua Web API.
 
-- **Atomicity:** Tất cả thao tác thành công hoặc cùng bị hủy.
-- **Consistency:** Dữ liệu luôn đảm bảo tính nhất quán.
-- **Isolation:** Các giao dịch được cô lập với nhau.
-- **Durability:** Dữ liệu được lưu bền vững sau khi xác nhận.
+### 4.6. Tối ưu hiệu suất hệ thống
 
-Sử dụng `SqlTransaction` với ba thao tác chính:
+Thay vì tải toàn bộ sản phẩm, hệ thống chỉ lấy dữ liệu theo từng trang.
 
-- `BeginTransaction()`: Bắt đầu giao dịch.
-- `Commit()`: Xác nhận lưu dữ liệu.
-- `Rollback()`: Hoàn tác dữ liệu khi có lỗi.
+Lợi ích:
 
-### 4.5. API thanh toán POS
-
-Xây dựng API thanh toán hóa đơn với quy trình:
-
-1. Tạo hóa đơn trong bảng `Orders`.
-2. Lưu chi tiết sản phẩm vào `OrderDetails`.
-3. Kiểm tra và trừ số lượng tồn kho trong `Products`.
-4. Cộng điểm thưởng cho khách hàng trong `Customers`.
-5. `Commit` khi toàn bộ thao tác thành công; `Rollback` khi xảy ra lỗi.
-
-Endpoint:
-
-```http
-POST /api/checkout
-```
-
-API sử dụng `SqlTransaction` để đảm bảo các thao tác thanh toán được thực hiện đồng bộ, tránh tình trạng hóa đơn đã tạo nhưng tồn kho hoặc chi tiết đơn hàng chưa được cập nhật.
+- Giảm lượng dữ liệu truyền qua mạng.
+- Tiết kiệm bộ nhớ.
+- Tăng tốc độ hiển thị.
+- Giúp giao diện WinForms hoạt động mượt mà hơn.
+- Phù hợp khi cửa hàng có số lượng sản phẩm lớn.
 
 ---
 
-## 5. Kiểm thử chương trình
+## 5. KIỂM THỬ CHỨC NĂNG
 
-Kiểm thử các API bằng Swagger UI và đối chiếu dữ liệu trực tiếp trên SQL Server Management Studio (SSMS).
+| STT | Chức năng | Kết quả mong đợi |
+|---|---|---|
+| 1 | Gọi API phân trang | Trả về HTTP 200 và dữ liệu phân trang |
+| 2 | Hiển thị tên nhóm hàng | Có trường `CategoryName` |
+| 3 | Tìm kiếm sản phẩm | Trả về sản phẩm phù hợp từ khóa |
+| 4 | Chuyển trang | Hiển thị đúng dữ liệu trang được chọn |
+| 5 | Thêm sản phẩm | Lưu sản phẩm vào SQL Server |
+| 6 | Cập nhật sản phẩm | Thông tin được thay đổi trong CSDL |
+| 7 | Xóa sản phẩm | Xóa sản phẩm và cập nhật danh sách |
 
-| Trường hợp | Kết quả mong đợi |
-|---|---|
-| Tra cứu Barcode hợp lệ | `200 OK` |
-| Barcode không tồn tại | `404 Not Found` |
-| Lấy báo cáo doanh thu | `200 OK` |
-| Thanh toán hợp lệ | `200 OK`, dữ liệu được lưu |
-| Mua vượt quá tồn kho | `400 Bad Request`, giao dịch được Rollback |
-
-Khi thanh toán thất bại, cần kiểm tra để đảm bảo hóa đơn, chi tiết đơn hàng, tồn kho và điểm thưởng không bị thay đổi một phần.
-
----
-
-## 6. Kết quả và kiến thức đạt được
-
-Sau Buổi 5, sinh viên được thực hành:
-
-- Kết nối và truy vấn SQL Server bằng ADO.NET.
-- Sử dụng tham số SQL an toàn.
-- Tra cứu sản phẩm theo Barcode.
-- Xây dựng Stored Procedure và API báo cáo doanh thu.
-- Hiểu nguyên tắc ACID và điều khiển giao dịch.
-- Xây dựng API thanh toán POS có xử lý lỗi và Rollback.
-- Kiểm tra tính toàn vẹn dữ liệu bằng Swagger và SSMS.
+**Dữ liệu mẫu:** Sản phẩm thuộc các nhóm ngành hàng trong siêu thị, sử dụng để kiểm tra tìm kiếm và phân trang.
 
 ---
 
-## 7. Checklist kiểm tra
+## 6. KẾT QUẢ VÀ KIẾN THỨC ĐẠT ĐƯỢC
 
-- [ ] Thực hành `ExecuteScalar()`, `ExecuteNonQuery()` và `ExecuteReader()`.
-- [ ] Kiểm thử API tra cứu Barcode.
-- [ ] Tạo và gọi Stored Procedure báo cáo doanh thu.
-- [ ] Hiểu và áp dụng `BeginTransaction()`, `Commit()` và `Rollback()`.
-- [ ] Kiểm thử API thanh toán POS thành công.
-- [ ] Kiểm thử trường hợp mua vượt quá tồn kho và xác nhận Rollback.
-- [ ] Đối chiếu dữ liệu sau giao dịch trên SQL Server. reamde ok ko
+Thông qua Buổi 6, sinh viên thực hành:
+
+- Sử dụng Entity Framework Core với Eager Loading (`Include`).
+- Xây dựng API tìm kiếm và phân trang bằng LINQ (`Skip`, `Take`, `CountAsync`).
+- Sử dụng DTO để chuẩn hóa dữ liệu trả về.
+- Kết nối WinForms với ASP.NET Core Web API bằng `HttpClient`.
+- Xử lý dữ liệu bất đồng bộ bằng `async/await`.
+- Tích hợp JWT Bearer Token vào HTTP Request.
+- Xây dựng giao diện quản lý sản phẩm có phân trang, layout cân đối, chuyên nghiệp.
+- Tối ưu việc truy xuất dữ liệu từ SQL Server.
+
+---
+
+## 7. HƯỚNG DẪN CHẠY DỰ ÁN
+
+1. Mở solution `MiniSupermarket.API.sln` bằng Visual Studio.
+2. Kiểm tra chuỗi kết nối SQL Server trong `appsettings.json`.
+3. Đảm bảo cơ sở dữ liệu đã được tạo và có dữ liệu mẫu.
+4. Khởi chạy project `MiniSupermarket.API`.
+5. Kiểm tra API trên Swagger (`/swagger`).
+6. Khởi chạy project `MiniSupermarketWinForms`.
+7. Đăng nhập và mở màn hình quản lý sản phẩm.
+8. Kiểm tra tìm kiếm, phân trang và các thao tác quản lý sản phẩm.
+
+---
+
+## 8. NỘI DUNG MỞ RỘNG (ĐÃ HOÀN THIỆN)
+
+Hệ thống đã triển khai nâng cao vượt yêu cầu cơ bản:
+
+- **Phân trang khách hàng:** `GET /api/customers/paged` kết hợp tìm kiếm và phân trang trên WinForms `FormCustomerManagement`.
+- **Phân trang danh mục ngành hàng:** `GET /api/categories/paged` kết hợp tìm kiếm và phân trang trên WinForms `FormCategoryManagement`.
+- **Chuẩn hóa giao diện toàn hệ thống:** Đồng bộ tỷ lệ 70/30, chiều cao dòng 30px, tiêu đề 34px không ngắt dòng, thanh phân trang chân bảng và 4 nút tác vụ cân đối cho tất cả các phân hệ quản lý.
+
+---
+
+**Sinh viên thực hiện:** Nguyễn Ngọc Minh Thư  
+**MSSV:** 2124110080  
+**Lớp:** CCQ2411C  
+**Dự án:** Bách hóa Tổng hợp Hoàng Dung – MiniSupermarket  
+**Bài thực hành:** Buổi 6 – Entity Framework Core nâng cao, phân trang LINQ và tích hợp POS Client – Server
