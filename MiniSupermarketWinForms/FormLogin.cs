@@ -1,3 +1,9 @@
+/*
+ * Họ và tên: Nguyễn Ngọc Minh Thư
+ * Mã sinh viên: 2124110080
+ * Ngày tạo: 26/09/2026 - Ngày cập nhật: 17/10/2026
+ * Đề tài: Bách hóa Tổng hợp Hoàng Dung
+ */
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -14,6 +20,37 @@ namespace MiniSupermarketWinForms {
 
         public FormLogin() {
             InitializeComponent();
+            ApplyBranding();
+        }
+
+        // Giao diện đăng nhập mang thương hiệu cửa hàng
+        private void ApplyBranding() {
+            const int bannerHeight = 80;
+            foreach (Control c in Controls) c.Top += bannerHeight;
+
+            var lblBrand = new Label {
+                Text = "🛒 BÁCH HÓA TỔNG HỢP\r\nHOÀNG DUNG",
+                Dock = DockStyle.Top,
+                Height = bannerHeight,
+                BackColor = UiTheme.Primary,
+                ForeColor = System.Drawing.Color.White,
+                Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold),
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            };
+            Controls.Add(lblBrand);
+
+            ClientSize = new System.Drawing.Size(ClientSize.Width, ClientSize.Height + bannerHeight + 10);
+            BackColor = System.Drawing.Color.White;
+            Text = "Đăng nhập - Bách hóa Tổng hợp Hoàng Dung";
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+
+            btnLogin.FlatStyle = FlatStyle.Flat;
+            btnLogin.FlatAppearance.BorderSize = 0;
+            btnLogin.BackColor = UiTheme.PrimaryLight;
+            btnLogin.ForeColor = System.Drawing.Color.White;
+            btnLogin.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            AcceptButton = btnLogin;
         }
 
         // Sự kiện khi người dùng bấm nút Đăng nhập
@@ -48,7 +85,7 @@ namespace MiniSupermarketWinForms {
                             SessionManager.CurrentUsername = userElem.GetString() ?? string.Empty;
 
                         // Add the token to the global HttpClient so child forms can make authenticated requests
-                        ApiClientService.Client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.JwtToken);
+                        ApiClientService.AttachToken(SessionManager.JwtToken);
                     }
 
                     MessageBox.Show($"Đăng nhập thành công với quyền: {SessionManager.CurrentRole}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

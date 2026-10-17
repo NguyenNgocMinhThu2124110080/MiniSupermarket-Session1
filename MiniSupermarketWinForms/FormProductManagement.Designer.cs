@@ -1,3 +1,9 @@
+/*
+ * Họ và tên: Nguyễn Ngọc Minh Thư
+ * Mã sinh viên: 2124110080
+ * Ngày tạo: 26/09/2026 - Ngày cập nhật: 17/10/2026
+ * Đề tài: Bách hóa Tổng hợp Hoàng Dung
+ */
 namespace MiniSupermarketWinForms
 {
     partial class FormProductManagement
@@ -16,6 +22,16 @@ namespace MiniSupermarketWinForms
         private void InitializeComponent()
         {
             this.dgvProducts = new System.Windows.Forms.DataGridView();
+            this.panelTopSearch = new System.Windows.Forms.Panel();
+            this.lblSearch = new System.Windows.Forms.Label();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.lblFilterCategory = new System.Windows.Forms.Label();
+            this.cboFilterCategory = new System.Windows.Forms.ComboBox();
+            this.panelPaging = new System.Windows.Forms.Panel();
+            this.btnPrev = new System.Windows.Forms.Button();
+            this.lblPaging = new System.Windows.Forms.Label();
+            this.btnNext = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -34,16 +50,120 @@ namespace MiniSupermarketWinForms
             this.lblBarcode = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.panelTopSearch.SuspendLayout();
+            this.panelPaging.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
+// 
+            // panelTopSearch
             // 
+            this.panelTopSearch.Controls.Add(this.cboFilterCategory);
+            this.panelTopSearch.Controls.Add(this.lblFilterCategory);
+            this.panelTopSearch.Controls.Add(this.btnSearch);
+            this.panelTopSearch.Controls.Add(this.txtSearch);
+            this.panelTopSearch.Controls.Add(this.lblSearch);
+            this.panelTopSearch.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTopSearch.Location = new System.Drawing.Point(3, 19);
+            this.panelTopSearch.Name = "panelTopSearch";
+            this.panelTopSearch.Size = new System.Drawing.Size(650, 40);
+            this.panelTopSearch.TabIndex = 0;
+            // 
+            // lblSearch
+            // 
+            this.lblSearch.AutoSize = true;
+            this.lblSearch.Location = new System.Drawing.Point(6, 12);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(59, 15);
+            this.lblSearch.TabIndex = 0;
+            this.lblSearch.Text = "Tìm kiếm:";
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(68, 8);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(160, 23);
+            this.txtSearch.TabIndex = 1;
+            this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(234, 7);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(55, 26);
+            this.btnSearch.TabIndex = 2;
+            this.btnSearch.Text = "Tìm";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // lblFilterCategory
+            // 
+            this.lblFilterCategory.AutoSize = true;
+            this.lblFilterCategory.Location = new System.Drawing.Point(298, 12);
+            this.lblFilterCategory.Name = "lblFilterCategory";
+            this.lblFilterCategory.Size = new System.Drawing.Size(65, 15);
+            this.lblFilterCategory.TabIndex = 3;
+            this.lblFilterCategory.Text = "Lọc nhóm:";
+            // 
+            // cboFilterCategory
+            // 
+            this.cboFilterCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFilterCategory.FormattingEnabled = true;
+            this.cboFilterCategory.Location = new System.Drawing.Point(368, 8);
+            this.cboFilterCategory.Name = "cboFilterCategory";
+            this.cboFilterCategory.Size = new System.Drawing.Size(220, 23);
+            this.cboFilterCategory.TabIndex = 4;
+            this.cboFilterCategory.SelectedIndexChanged += new System.EventHandler(this.cboFilterCategory_SelectedIndexChanged);
+            // 
+            // panelPaging
+            // 
+            this.panelPaging.Controls.Add(this.btnNext);
+            this.panelPaging.Controls.Add(this.lblPaging);
+            this.panelPaging.Controls.Add(this.btnPrev);
+            this.panelPaging.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelPaging.Location = new System.Drawing.Point(3, 515);
+            this.panelPaging.Name = "panelPaging";
+            this.panelPaging.Size = new System.Drawing.Size(650, 42);
+            this.panelPaging.TabIndex = 2;
+            // 
+            // btnPrev
+            // 
+            this.btnPrev.Location = new System.Drawing.Point(10, 7);
+            this.btnPrev.Name = "btnPrev";
+            this.btnPrev.Size = new System.Drawing.Size(120, 28);
+            this.btnPrev.TabIndex = 0;
+            this.btnPrev.Text = "<< Trang trước";
+            this.btnPrev.UseVisualStyleBackColor = true;
+            this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
+            // 
+            // lblPaging
+            // 
+            this.lblPaging.AutoSize = true;
+            this.lblPaging.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lblPaging.Location = new System.Drawing.Point(145, 12);
+            this.lblPaging.Name = "lblPaging";
+            this.lblPaging.Size = new System.Drawing.Size(155, 17);
+            this.lblPaging.TabIndex = 1;
+            this.lblPaging.Text = "Trang 1 / 1 (Tổng: 0 SP)";
+            // 
+            // btnNext
+            // 
+            this.btnNext.Location = new System.Drawing.Point(360, 7);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(120, 28);
+            this.btnNext.TabIndex = 2;
+            this.btnNext.Text = "Trang sau >>";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+                        // 
             // dgvProducts
             // 
             this.dgvProducts.AllowUserToAddRows = false;
             this.dgvProducts.AllowUserToDeleteRows = false;
             this.dgvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvProducts.Location = new System.Drawing.Point(3, 19);
+            this.dgvProducts.Location = new System.Drawing.Point(3, 59);
             this.dgvProducts.Name = "dgvProducts";
             this.dgvProducts.ReadOnly = true;
             this.dgvProducts.Size = new System.Drawing.Size(650, 538);
@@ -53,6 +173,9 @@ namespace MiniSupermarketWinForms
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgvProducts);
+            this.groupBox1.Controls.Add(this.panelPaging);
+            this.groupBox1.Controls.Add(this.panelTopSearch);
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(656, 560);
@@ -76,6 +199,7 @@ namespace MiniSupermarketWinForms
             this.groupBox2.Controls.Add(this.lblProductName);
             this.groupBox2.Controls.Add(this.txtBarcode);
             this.groupBox2.Controls.Add(this.lblBarcode);
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Location = new System.Drawing.Point(685, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(287, 560);
@@ -217,6 +341,10 @@ namespace MiniSupermarketWinForms
             this.Text = "Quản lý Thông Tin Sản Phẩm & Kho Hàng";
             this.Load += new System.EventHandler(this.FormProductManagement_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).EndInit();
+            this.panelTopSearch.ResumeLayout(false);
+            this.panelTopSearch.PerformLayout();
+            this.panelPaging.ResumeLayout(false);
+            this.panelPaging.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -225,6 +353,16 @@ namespace MiniSupermarketWinForms
         }
 
         private System.Windows.Forms.DataGridView dgvProducts;
+        private System.Windows.Forms.Panel panelTopSearch;
+        private System.Windows.Forms.Label lblSearch;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Label lblFilterCategory;
+        private System.Windows.Forms.ComboBox cboFilterCategory;
+        private System.Windows.Forms.Panel panelPaging;
+        private System.Windows.Forms.Button btnPrev;
+        private System.Windows.Forms.Label lblPaging;
+        private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtBarcode;

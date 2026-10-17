@@ -14,6 +14,7 @@ namespace MiniSupermarketWinForms {
     public partial class FormUserManagement : Form {
         public FormUserManagement() {
             InitializeComponent();
+            UiTheme.StyleGrid(dgvUsers);
             cboRole.Items.AddRange(new string[] { "Admin", "Cashier", "Warehouse" });
             cboRole.SelectedIndex = 1;
         }

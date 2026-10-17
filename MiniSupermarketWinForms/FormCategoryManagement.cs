@@ -1,3 +1,9 @@
+/*
+ * Họ và tên: Nguyễn Ngọc Minh Thư
+ * Mã sinh viên: 2124110080
+ * Ngày tạo: 26/09/2026 - Ngày cập nhật: 17/10/2026
+ * Đề tài: Bách hóa Tổng hợp Hoàng Dung
+ */
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -13,6 +19,7 @@ namespace MiniSupermarketWinForms
         public FormCategoryManagement()
         {
             InitializeComponent();
+            UiTheme.StyleGrid(dgvCategories);
         }
 
         // Bổ sung phương thức cấu hình HttpClient có gắn kèm Token bảo mật

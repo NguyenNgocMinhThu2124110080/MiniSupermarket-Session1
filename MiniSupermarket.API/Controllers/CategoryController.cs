@@ -1,8 +1,8 @@
 /*
- * Ten:Nguyen Ngoc Minh Thu
- * Masv:
- * Ngay cap nhap: 26/09/2026
- thay doi code su dung EF Core 
+ * Họ và tên: Nguyễn Ngọc Minh Thư
+ * Mã sinh viên: 2124110080
+ * Ngày tạo: 26/09/2026 - Ngày cập nhật: 17/10/2026
+ * Đề tài: Bách hóa Tổng hợp Hoàng Dung
  */
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

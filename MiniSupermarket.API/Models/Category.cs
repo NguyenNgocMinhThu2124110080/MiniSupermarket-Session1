@@ -2,28 +2,39 @@
  * Ten:Nguyen Ngoc Minh Thu
  * Masv:2124110080
  * Ngay cap nhat:  26/09/2026
- * Bổ sung Data Annotations và quan hệ 1-Nhiều với Sản phẩm
+ * Bo sung Data Annotations va quan he 1-Nhieu voi San pham
  */
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace MiniSupermarket.API.Models {
-    [Table("Categories")] // Đặt tên bảng rõ ràng trong SQL Server
-    public class Category {
-        [Key] // Khóa chính
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Tự động tăng (Identity 1,1)
+namespace MiniSupermarket.API.Models
+{
+    /// <summary>
+    /// Thực thể phân loại nhóm ngành hàng trong siêu thị mini
+    /// Ánh xạ tương ứng với bảng [Categories] trong SQL Server
+    /// </summary>
+    [Table("Categories")]
+    public class Category
+    {
+        // 1. Khóa chính tự tăng IDENTITY(1,1)
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CategoryId { get; set; }
 
+        // 2. Tên nhóm hàng: Bắt buộc, tối đa 100 ký tự
         [Required(ErrorMessage = "Tên nhóm hàng không được để trống!")]
-        [StringLength(100, ErrorMessage = "Tên nhóm hàng không vượt quá 100 ký tự")]
+        [StringLength(100, ErrorMessage = "Tên nhóm hàng không vượt quá 100 ký tự!")]
         public string CategoryName { get; set; } = string.Empty;
 
+        // 3. Mô tả chi tiết nhóm hàng (Cho phép null)
         [StringLength(255)]
         public string? Description { get; set; }
 
-        // Quan hệ 1 - N: Một danh mục có nhiều sản phẩm
-        [JsonIgnore] // Tránh lỗi lặp vòng vô tận khi serialize JSON
-        public virtual ICollection<Product>? Products { get; set; }
+        // Thuộc tính điều hướng quan hệ 1-Nhiều (1 Nhóm hàng chứa nhiều Sản phẩm)
+        // [JsonIgnore] ngăn ngừa lỗi lặp vòng vô hạn (Circular Reference) khi serialize JSON
+        [JsonIgnore]
+        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

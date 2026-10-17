@@ -1,3 +1,9 @@
+/*
+ * Họ và tên: Nguyễn Ngọc Minh Thư
+ * Mã sinh viên: 2124110080
+ * Ngày tạo: 26/09/2026 - Ngày cập nhật: 17/10/2026
+ * Đề tài: Bách hóa Tổng hợp Hoàng Dung
+ */
 namespace MiniSupermarketWinForms
 {
     partial class FormMainShell
@@ -36,7 +42,7 @@ namespace MiniSupermarketWinForms
             // 
             // panelSidebar
             // 
-            this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(48)))));
+            this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(87)))), ((int)(((byte)(54)))));
             this.panelSidebar.Controls.Add(this.btnUserManage);
             this.panelSidebar.Controls.Add(this.btnReports);
             this.panelSidebar.Controls.Add(this.btnCustomer);
@@ -83,7 +89,7 @@ namespace MiniSupermarketWinForms
             this.lblLogo.Name = "lblLogo";
             this.lblLogo.Size = new System.Drawing.Size(230, 60);
             this.lblLogo.TabIndex = 0;
-            this.lblLogo.Text = "🛒 MiniMart POS";
+            this.lblLogo.Text = "🛒 Hoàng Dung POS";
             this.lblLogo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnPOS
@@ -216,7 +222,7 @@ namespace MiniSupermarketWinForms
             // 
             // panelMainContent
             // 
-            this.panelMainContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(245)))), ((int)(((byte)(247)))));
+            this.panelMainContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(248)))), ((int)(((byte)(246)))));
             this.panelMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMainContent.Location = new System.Drawing.Point(230, 60);
             this.panelMainContent.Name = "panelMainContent";
@@ -233,7 +239,7 @@ namespace MiniSupermarketWinForms
             this.Controls.Add(this.panelSidebar);
             this.Name = "FormMainShell";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Hệ thống Quản lý Bán lẻ & Tồn kho Siêu thị Mini";
+            this.Text = "Bách hóa Tổng hợp Hoàng Dung - Quản lý Bán lẻ & Tồn kho";
             this.Load += new System.EventHandler(this.FormMainShell_Load);
             this.panelSidebar.ResumeLayout(false);
             this.panelUserFooter.ResumeLayout(false);

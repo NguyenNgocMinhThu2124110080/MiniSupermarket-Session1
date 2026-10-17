@@ -60,7 +60,7 @@ namespace MiniSupermarketWinForms
             this.lblBarcodeTitle.Name = "lblBarcodeTitle";
             this.lblBarcodeTitle.Size = new System.Drawing.Size(104, 20);
             this.lblBarcodeTitle.TabIndex = 1;
-            this.lblBarcodeTitle.Text = "Quét mã SP:";
+            this.lblBarcodeTitle.Text = "Barcode:";
             // 
             // dgvCart
             // 

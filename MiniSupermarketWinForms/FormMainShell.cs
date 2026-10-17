@@ -1,3 +1,9 @@
+/*
+ * Họ và tên: Nguyễn Ngọc Minh Thư
+ * Mã sinh viên: 2124110080
+ * Ngày tạo: 26/09/2026 - Ngày cập nhật: 17/10/2026
+ * Đề tài: Bách hóa Tổng hợp Hoàng Dung
+ */
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -16,6 +22,7 @@ namespace MiniSupermarketWinForms
 
         private void FormMainShell_Load(object sender, EventArgs e)
         {
+            lblTitle.ForeColor = UiTheme.Primary;
             // 1. Hiển thị thông tin phiên người dùng đăng nhập
             lblUserInfo.Text = $"Nhân viên: {SessionManager.CurrentUser} ({SessionManager.CurrentUsername}) | Vai trò: [{SessionManager.CurrentRole}]";
 
@@ -62,13 +69,13 @@ namespace MiniSupermarketWinForms
             {
                 if (ctrl is Button btn && btn != btnLogout)
                 {
-                    btn.BackColor = Color.FromArgb(24, 30, 48); // Màu gốc
+                    btn.BackColor = UiTheme.Primary; // Màu gốc
                 }
             }
 
             if (activeButton != null)
             {
-                activeButton.BackColor = Color.FromArgb(41, 100, 180); // Màu xanh active
+                activeButton.BackColor = UiTheme.Accent; // Màu xanh active
             }
         }
 

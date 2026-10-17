@@ -1,4 +1,10 @@
-﻿using System;
+/*
+ * Họ và tên: Nguyễn Ngọc Minh Thư
+ * Mã sinh viên: 2124110080
+ * Ngày tạo: 26/09/2026 - Ngày cập nhật: 17/10/2026
+ * Đề tài: Bách hóa Tổng hợp Hoàng Dung
+ */
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -12,6 +18,7 @@ namespace MiniSupermarketWinForms {
 
         public FormPOS() {
             InitializeComponent();
+            UiTheme.StyleGrid(dgvCart);
             SetupCartGrid();
         }
 

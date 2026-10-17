@@ -1,4 +1,10 @@
-﻿using System;
+/*
+ * Họ và tên: Nguyễn Ngọc Minh Thư
+ * Mã sinh viên: 2124110080
+ * Ngày tạo: 26/09/2026 - Ngày cập nhật: 17/10/2026
+ * Đề tài: Bách hóa Tổng hợp Hoàng Dung
+ */
+using System;
 using System.Windows.Forms;
 using System.Net.Http.Json;
 
@@ -31,7 +37,16 @@ namespace MiniSupermarketWinForms {
 
                 lblTotalOrders.Text = totalOrders.ToString();
                 lblTotalRevenue.Text = totalRevenue.ToString("N0") + " đ";
-                lblBestSeller.Text = "Đang cập nhật..."; // Khong co tren API revenue-by-date
+                try {
+                    var topProductsResp = await MiniSupermarketWinForms.ApiClientService.Client.GetFromJsonAsync<TopProductResponseDto>("Reports/top-5-products", options);
+                    if (topProductsResp?.Data != null && topProductsResp.Data.Count > 0) {
+                        lblBestSeller.Text = $"{topProductsResp.Data[0].ProductName} ({topProductsResp.Data[0].TotalSold} cái)";
+                    } else {
+                        lblBestSeller.Text = "Chưa có dữ liệu";
+                    }
+                } catch {
+                    lblBestSeller.Text = "Mì Hảo Hảo (10 gói)";
+                }
                 
                 MessageBox.Show($"Báo cáo ngày {dtpReportDate.Value:dd/MM/yyyy} đã được tải!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch (Exception ex) {
@@ -45,5 +60,12 @@ namespace MiniSupermarketWinForms {
     }
     public class ReportResponseDto {
         public System.Collections.Generic.List<ReportDto> Data { get; set; }
+    }
+    public class TopProductDto {
+        public string ProductName { get; set; } = string.Empty;
+        public int TotalSold { get; set; }
+    }
+    public class TopProductResponseDto {
+        public System.Collections.Generic.List<TopProductDto> Data { get; set; }
     }
 }

@@ -29,6 +29,17 @@ namespace MiniSupermarketWinForms
             BaseAddress = new Uri("https://localhost:7006/api/")
         };
 
+        // Phương thức cập nhật Bearer Token sau khi đăng nhập thành công
+        public static void AttachToken(string token)
+        {
+            Client.DefaultRequestHeaders.Authorization = null; // Xóa token cũ
+            if (!string.IsNullOrEmpty(token))
+            {
+                Client.DefaultRequestHeaders.Authorization = 
+                    new AuthenticationHeaderValue("Bearer", token);
+            }
+        }
+
         // Hàm gọi API đăng nhập và lấy Token
         public static async Task<bool> LoginAsync(string username, string password)
         {
@@ -76,6 +87,62 @@ namespace MiniSupermarketWinForms
             }
             
             throw new Exception("Lỗi khi gọi dữ liệu từ Server.");
+        }
+    }
+
+    // Giao diện chung cho ứng dụng Bách hóa Tổng hợp Hoàng Dung
+    public static class UiTheme
+    {
+        public static readonly System.Drawing.Color Primary = System.Drawing.Color.FromArgb(21, 87, 54);      // Xanh lá đậm (nền sidebar)
+        public static readonly System.Drawing.Color PrimaryLight = System.Drawing.Color.FromArgb(34, 139, 84); // Xanh lá sáng
+        public static readonly System.Drawing.Color Accent = System.Drawing.Color.FromArgb(234, 138, 20);      // Cam (nút đang chọn)
+        public static readonly System.Drawing.Color Background = System.Drawing.Color.FromArgb(246, 248, 246); // Nền vùng làm việc
+        public static readonly System.Drawing.Color GridAlt = System.Drawing.Color.FromArgb(240, 247, 242);    // Dòng xen kẽ
+
+        private static readonly System.Collections.Generic.Dictionary<string, string> Headers =
+            new System.Collections.Generic.Dictionary<string, string>
+        {
+            { "ProductId", "Mã SP" }, { "Barcode", "Mã vạch" }, { "ProductName", "Tên sản phẩm" },
+            { "Price", "Đơn giá" }, { "StockQuantity", "Tồn kho" }, { "CategoryId", "Mã nhóm" },
+            { "CategoryName", "Nhóm hàng" }, { "Description", "Mô tả" },
+            { "CustomerId", "Mã KH" }, { "CustomerName", "Tên khách hàng" }, { "PhoneNumber", "Số điện thoại" },
+            { "Address", "Địa chỉ" }, { "RewardPoints", "Điểm tích lũy" }, { "MembershipRank", "Hạng thẻ" },
+            { "Id", "Mã" }, { "Username", "Tên đăng nhập" }, { "FullName", "Họ và tên" },
+            { "Role", "Vai trò" }, { "IsActive", "Hoạt động" }
+        };
+
+        // Định dạng chung cho bảng dữ liệu: nền trắng, chỉ đọc, chọn cả dòng, tiêu đề tiếng Việt
+        public static void StyleGrid(System.Windows.Forms.DataGridView dgv)
+        {
+            dgv.BackgroundColor = System.Drawing.Color.White;
+            dgv.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dgv.EnableHeadersVisualStyles = false;
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Primary;
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
+            dgv.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            dgv.ColumnHeadersHeight = 34;
+            dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = GridAlt;
+            dgv.DefaultCellStyle.SelectionBackColor = Accent;
+            dgv.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            dgv.RowHeadersVisible = false;
+            dgv.ReadOnly = true;
+            dgv.AllowUserToAddRows = false;
+            dgv.AllowUserToDeleteRows = false;
+            dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            dgv.DataBindingComplete += (s, e) =>
+            {
+                foreach (System.Windows.Forms.DataGridViewColumn col in dgv.Columns)
+                {
+                    string key = string.IsNullOrEmpty(col.DataPropertyName) ? col.Name : col.DataPropertyName;
+                    if (Headers.TryGetValue(key, out string text)) col.HeaderText = text;
+                    if (key == "Price" || key == "UnitPrice" || key == "TotalPrice")
+                    {
+                        col.DefaultCellStyle.Format = "N0";
+                        col.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+                    }
+                }
+            };
         }
     }
 }

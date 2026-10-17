@@ -19,6 +19,7 @@ namespace MiniSupermarketWinForms
         public FormCustomerManagement()
         {
             InitializeComponent();
+            UiTheme.StyleGrid(dgvCustomers);
         }
 
         // Tao HttpClient co dinh kem JWT Token tu SessionManager
