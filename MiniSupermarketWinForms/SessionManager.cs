@@ -124,7 +124,7 @@ namespace MiniSupermarketWinForms
             dgv.ColumnHeadersDefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             dgv.ColumnHeadersHeight = 34;
             dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgv.RowTemplate.Height = 28;
+            dgv.RowTemplate.Height = 30;
             dgv.AlternatingRowsDefaultCellStyle.BackColor = GridAlt;
             dgv.DefaultCellStyle.SelectionBackColor = Accent;
             dgv.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
@@ -138,7 +138,7 @@ namespace MiniSupermarketWinForms
             {
                 foreach (System.Windows.Forms.DataGridViewRow r in dgv.Rows)
                 {
-                    r.Height = 28;
+                    r.Height = 30;
                 }
                 foreach (System.Windows.Forms.DataGridViewColumn col in dgv.Columns)
                 {

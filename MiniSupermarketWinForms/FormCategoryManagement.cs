@@ -319,6 +319,21 @@ namespace MiniSupermarketWinForms
         // =========================================================
         // XÓA TRẮNG FORM
         // =========================================================
+                private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearInputs();
+        }
+
+        private async void txtKeyword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                _currentPage = 1;
+                await LoadDataAsync();
+            }
+        }
+
         private void ClearInputs()
         {
             txtId.Clear();

@@ -8,15 +8,8 @@ namespace MiniSupermarketWinForms
 {
     partial class FormCategoryManagement
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -28,117 +21,114 @@ namespace MiniSupermarketWinForms
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.btnOpenCustomer = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dgvCategories = new System.Windows.Forms.DataGridView();
+            this.panelTopSearch = new System.Windows.Forms.Panel();
+            this.lblKeyword = new System.Windows.Forms.Label();
+            this.txtKeyword = new System.Windows.Forms.TextBox();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.panelPaging = new System.Windows.Forms.Panel();
             this.btnPrev = new System.Windows.Forms.Button();
             this.lblPaging = new System.Windows.Forms.Label();
             this.btnNext = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.txtKeyword = new System.Windows.Forms.TextBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.btnLoad = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dgvCategories = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.txtDescription = new System.Windows.Forms.TextBox();
-            this.txtCategoryName = new System.Windows.Forms.TextBox();
+            this.lblId = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblCategoryName = new System.Windows.Forms.Label();
+            this.txtCategoryName = new System.Windows.Forms.TextBox();
+            this.lblDescription = new System.Windows.Forms.Label();
+            this.txtDescription = new System.Windows.Forms.TextBox();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).BeginInit();
+            this.panelTopSearch.SuspendLayout();
+            this.panelPaging.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // groupBox1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Tìm kiếm nhóm hàng:";
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.dgvCategories);
+            this.groupBox1.Controls.Add(this.panelPaging);
+            this.groupBox1.Controls.Add(this.panelTopSearch);
+            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(656, 560);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Danh Sách Nhóm Ngành Hàng";
             // 
-            // toolStrip1
+            // panelTopSearch
             // 
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(759, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
+            this.panelTopSearch.Controls.Add(this.btnLoad);
+            this.panelTopSearch.Controls.Add(this.btnSearch);
+            this.panelTopSearch.Controls.Add(this.txtKeyword);
+            this.panelTopSearch.Controls.Add(this.lblKeyword);
+            this.panelTopSearch.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTopSearch.Location = new System.Drawing.Point(3, 20);
+            this.panelTopSearch.Name = "panelTopSearch";
+            this.panelTopSearch.Size = new System.Drawing.Size(650, 42);
+            this.panelTopSearch.TabIndex = 0;
+            // 
+            // lblKeyword
+            // 
+            this.lblKeyword.AutoSize = true;
+            this.lblKeyword.Location = new System.Drawing.Point(10, 12);
+            this.lblKeyword.Name = "lblKeyword";
+            this.lblKeyword.Size = new System.Drawing.Size(62, 17);
+            this.lblKeyword.TabIndex = 0;
+            this.lblKeyword.Text = "Tìm kiếm:";
             // 
             // txtKeyword
             // 
-            this.txtKeyword.Location = new System.Drawing.Point(20, 42);
+            this.txtKeyword.Location = new System.Drawing.Point(78, 9);
             this.txtKeyword.Name = "txtKeyword";
-            this.txtKeyword.Size = new System.Drawing.Size(240, 20);
-            this.txtKeyword.TabIndex = 2;
+            this.txtKeyword.Size = new System.Drawing.Size(220, 24);
+            this.txtKeyword.TabIndex = 1;
+            this.txtKeyword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtKeyword_KeyDown);
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(270, 40);
+            this.btnSearch.Location = new System.Drawing.Point(306, 7);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(80, 26);
-            this.btnSearch.TabIndex = 3;
+            this.btnSearch.Size = new System.Drawing.Size(80, 28);
+            this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Tìm kiếm";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(358, 40);
+            this.btnLoad.Location = new System.Drawing.Point(394, 7);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(80, 26);
-            this.btnLoad.TabIndex = 4;
+            this.btnLoad.Size = new System.Drawing.Size(80, 28);
+            this.btnLoad.TabIndex = 3;
             this.btnLoad.Text = "Tải lại";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
-            // btnOpenCustomer
-            // 
-            this.btnOpenCustomer.Location = new System.Drawing.Point(450, 40);
-            this.btnOpenCustomer.Name = "btnOpenCustomer";
-            this.btnOpenCustomer.Size = new System.Drawing.Size(140, 26);
-            this.btnOpenCustomer.TabIndex = 10;
-            this.btnOpenCustomer.Text = "Quản lý Khách hàng";
-            this.btnOpenCustomer.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnOpenCustomer.ForeColor = System.Drawing.Color.White;
-            this.btnOpenCustomer.UseVisualStyleBackColor = false;
-            this.btnOpenCustomer.Click += new System.EventHandler(this.btnOpenCustomer_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.dgvCategories);
-            this.groupBox1.Controls.Add(this.panelPaging);
-            this.panelPaging.SendToBack();
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Location = new System.Drawing.Point(20, 80);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(460, 380);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Danh sách nhóm hàng";
-            // 
             // dgvCategories
             // 
-            this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCategories.AllowUserToAddRows = false;
+            this.dgvCategories.AllowUserToDeleteRows = false;
             this.dgvCategories.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCategories.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvCategories.Location = new System.Drawing.Point(3, 16);
+            this.dgvCategories.Location = new System.Drawing.Point(3, 62);
             this.dgvCategories.Name = "dgvCategories";
-            this.dgvCategories.Size = new System.Drawing.Size(454, 321);
-            this.dgvCategories.TabIndex = 0;
+            this.dgvCategories.ReadOnly = true;
+            this.dgvCategories.Size = new System.Drawing.Size(650, 456);
+            this.dgvCategories.TabIndex = 1;
             this.dgvCategories.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategories_CellClick);
             // 
             // panelPaging
@@ -147,16 +137,16 @@ namespace MiniSupermarketWinForms
             this.panelPaging.Controls.Add(this.lblPaging);
             this.panelPaging.Controls.Add(this.btnPrev);
             this.panelPaging.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelPaging.Location = new System.Drawing.Point(3, 337);
+            this.panelPaging.Location = new System.Drawing.Point(3, 518);
             this.panelPaging.Name = "panelPaging";
-            this.panelPaging.Size = new System.Drawing.Size(454, 40);
+            this.panelPaging.Size = new System.Drawing.Size(650, 39);
             this.panelPaging.TabIndex = 2;
             // 
             // btnPrev
             // 
-            this.btnPrev.Location = new System.Drawing.Point(5, 6);
+            this.btnPrev.Location = new System.Drawing.Point(10, 6);
             this.btnPrev.Name = "btnPrev";
-            this.btnPrev.Size = new System.Drawing.Size(85, 26);
+            this.btnPrev.Size = new System.Drawing.Size(110, 28);
             this.btnPrev.TabIndex = 0;
             this.btnPrev.Text = "<< Trang trước";
             this.btnPrev.UseVisualStyleBackColor = true;
@@ -165,18 +155,18 @@ namespace MiniSupermarketWinForms
             // lblPaging
             // 
             this.lblPaging.AutoSize = true;
-            this.lblPaging.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblPaging.Location = new System.Drawing.Point(95, 11);
+            this.lblPaging.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lblPaging.Location = new System.Drawing.Point(135, 11);
             this.lblPaging.Name = "lblPaging";
-            this.lblPaging.Size = new System.Drawing.Size(130, 15);
+            this.lblPaging.Size = new System.Drawing.Size(150, 17);
             this.lblPaging.TabIndex = 1;
             this.lblPaging.Text = "Trang 1 / 1 (Tổng: 0)";
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(235, 6);
+            this.btnNext.Location = new System.Drawing.Point(305, 6);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(85, 26);
+            this.btnNext.Size = new System.Drawing.Size(110, 28);
             this.btnNext.TabIndex = 2;
             this.btnNext.Text = "Trang sau >>";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -184,154 +174,163 @@ namespace MiniSupermarketWinForms
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.btnClear);
             this.groupBox2.Controls.Add(this.btnDelete);
             this.groupBox2.Controls.Add(this.btnUpdate);
             this.groupBox2.Controls.Add(this.btnAdd);
             this.groupBox2.Controls.Add(this.txtDescription);
+            this.groupBox2.Controls.Add(this.lblDescription);
             this.groupBox2.Controls.Add(this.txtCategoryName);
+            this.groupBox2.Controls.Add(this.lblCategoryName);
             this.groupBox2.Controls.Add(this.txtId);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Location = new System.Drawing.Point(490, 80);
+            this.groupBox2.Controls.Add(this.lblId);
+            this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(685, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(260, 380);
-            this.groupBox2.TabIndex = 6;
+            this.groupBox2.Size = new System.Drawing.Size(320, 560);
+            this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Thông tin Nhóm hàng";
+            this.groupBox2.Text = "Thông Tin Nhóm Hàng";
             // 
-            // btnDelete
+            // lblId
             // 
-            this.btnDelete.Location = new System.Drawing.Point(171, 275);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(72, 30);
-            this.btnDelete.TabIndex = 9;
-            this.btnDelete.Text = "Xóa";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.lblId.AutoSize = true;
+            this.lblId.Location = new System.Drawing.Point(18, 30);
+            this.lblId.Name = "lblId";
+            this.lblId.Size = new System.Drawing.Size(95, 17);
+            this.lblId.TabIndex = 0;
+            this.lblId.Text = "Mã nhóm (ID):";
             // 
-            // btnUpdate
+            // txtId
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(92, 275);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(72, 30);
-            this.btnUpdate.TabIndex = 8;
-            this.btnUpdate.Text = "Cập nhật";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            this.txtId.Location = new System.Drawing.Point(20, 52);
+            this.txtId.Name = "txtId";
+            this.txtId.ReadOnly = true;
+            this.txtId.Size = new System.Drawing.Size(275, 24);
+            this.txtId.TabIndex = 1;
+            // 
+            // lblCategoryName
+            // 
+            this.lblCategoryName.AutoSize = true;
+            this.lblCategoryName.Location = new System.Drawing.Point(18, 92);
+            this.lblCategoryName.Name = "lblCategoryName";
+            this.lblCategoryName.Size = new System.Drawing.Size(103, 17);
+            this.lblCategoryName.TabIndex = 2;
+            this.lblCategoryName.Text = "Tên nhóm hàng:";
+            // 
+            // txtCategoryName
+            // 
+            this.txtCategoryName.Location = new System.Drawing.Point(20, 114);
+            this.txtCategoryName.Name = "txtCategoryName";
+            this.txtCategoryName.Size = new System.Drawing.Size(275, 24);
+            this.txtCategoryName.TabIndex = 3;
+            // 
+            // lblDescription
+            // 
+            this.lblDescription.AutoSize = true;
+            this.lblDescription.Location = new System.Drawing.Point(18, 156);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(90, 17);
+            this.lblDescription.TabIndex = 4;
+            this.lblDescription.Text = "Mô tả chi tiết:";
+            // 
+            // txtDescription
+            // 
+            this.txtDescription.Location = new System.Drawing.Point(20, 178);
+            this.txtDescription.Multiline = true;
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(275, 120);
+            this.txtDescription.TabIndex = 5;
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(13, 275);
+            this.btnAdd.Location = new System.Drawing.Point(20, 320);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(72, 30);
-            this.btnAdd.TabIndex = 7;
+            this.btnAdd.Size = new System.Drawing.Size(130, 40);
+            this.btnAdd.TabIndex = 6;
             this.btnAdd.Text = "Thêm mới";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // txtDescription
+            // btnUpdate
             // 
-            this.txtDescription.Location = new System.Drawing.Point(16, 160);
-            this.txtDescription.Multiline = true;
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(230, 95);
-            this.txtDescription.TabIndex = 6;
+            this.btnUpdate.Location = new System.Drawing.Point(165, 320);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(130, 40);
+            this.btnUpdate.TabIndex = 7;
+            this.btnUpdate.Text = "Cập nhật";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // txtCategoryName
+            // btnDelete
             // 
-            this.txtCategoryName.Location = new System.Drawing.Point(16, 106);
-            this.txtCategoryName.Name = "txtCategoryName";
-            this.txtCategoryName.Size = new System.Drawing.Size(234, 20);
-            this.txtCategoryName.TabIndex = 5;
+            this.btnDelete.Location = new System.Drawing.Point(20, 372);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(130, 40);
+            this.btnDelete.TabIndex = 8;
+            this.btnDelete.Text = "Xóa";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // txtId
+            // btnClear
             // 
-            this.txtId.Location = new System.Drawing.Point(16, 58);
-            this.txtId.Name = "txtId";
-            this.txtId.ReadOnly = true;
-            this.txtId.Size = new System.Drawing.Size(234, 20);
-            this.txtId.TabIndex = 4;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(36, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Mã ID";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 138);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(34, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Mô tả";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 90);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 13);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Tên Nhóm hàng";
+            this.btnClear.Location = new System.Drawing.Point(165, 372);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(130, 40);
+            this.btnClear.TabIndex = 9;
+            this.btnClear.Text = "Làm mới";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // FormCategoryManagement
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(770, 480);
-            this.Controls.Add(this.btnOpenCustomer);
+            this.ClientSize = new System.Drawing.Size(1020, 590);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnLoad);
-            this.Controls.Add(this.btnSearch);
-            this.Controls.Add(this.txtKeyword);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.label1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "FormCategoryManagement";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý Danh mục Nhóm hàng";
             this.Load += new System.EventHandler(this.FormCategoryManagement_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).EndInit();
+            this.panelTopSearch.ResumeLayout(false);
+            this.panelTopSearch.PerformLayout();
+            this.panelPaging.ResumeLayout(false);
+            this.panelPaging.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridView dgvCategories;
+        private System.Windows.Forms.Panel panelTopSearch;
+        private System.Windows.Forms.Label lblKeyword;
         private System.Windows.Forms.TextBox txtKeyword;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnLoad;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dgvCategories;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtDescription;
-        private System.Windows.Forms.TextBox txtCategoryName;
-        private System.Windows.Forms.TextBox txtId;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnOpenCustomer;
         private System.Windows.Forms.Panel panelPaging;
         private System.Windows.Forms.Button btnPrev;
         private System.Windows.Forms.Label lblPaging;
         private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lblId;
+        private System.Windows.Forms.TextBox txtId;
+        private System.Windows.Forms.Label lblCategoryName;
+        private System.Windows.Forms.TextBox txtCategoryName;
+        private System.Windows.Forms.Label lblDescription;
+        private System.Windows.Forms.TextBox txtDescription;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnClear;
     }
 }
-

@@ -25,14 +25,29 @@ namespace MiniSupermarketWinForms
         {
             InitializeComponent();
             UiTheme.StyleGrid(dgvCustomers);
-            dgvCustomers.RowTemplate.Height = 28;
-            dgvCustomers.DataBindingComplete += (s, e) =>
-            {
-                foreach (DataGridViewRow r in dgvCustomers.Rows)
-                {
-                    r.Height = 28;
-                }
-            };
+            dgvCustomers.RowTemplate.Height = 30;
+            dgvCustomers.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
+            SetupCustomerGridColumns();
+        }
+
+        private void SetupCustomerGridColumns()
+        {
+            dgvCustomers.Columns.Clear();
+            var colId = new DataGridViewTextBoxColumn { Name = "CustomerId", HeaderText = "Mã KH", FillWeight = 9 };
+            var colName = new DataGridViewTextBoxColumn { Name = "CustomerName", HeaderText = "Tên khách hàng", FillWeight = 26 };
+            var colPhone = new DataGridViewTextBoxColumn { Name = "PhoneNumber", HeaderText = "Số điện thoại", FillWeight = 16 };
+            var colAddr = new DataGridViewTextBoxColumn { Name = "Address", HeaderText = "Địa chỉ", FillWeight = 29 };
+            var colPoints = new DataGridViewTextBoxColumn { Name = "RewardPoints", HeaderText = "Điểm tích lũy", FillWeight = 10 };
+            var colRank = new DataGridViewTextBoxColumn { Name = "MembershipRank", HeaderText = "Hạng thành viên", FillWeight = 14 };
+
+            colId.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colPhone.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colPoints.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            colRank.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgvCustomers.Columns.AddRange(new DataGridViewColumn[] {
+                colId, colName, colPhone, colAddr, colPoints, colRank
+            });
         }
 
         // Tao HttpClient co dinh kem JWT Token tu SessionManager
@@ -94,7 +109,7 @@ namespace MiniSupermarketWinForms
                         }
                         foreach (DataGridViewRow r in dgvCustomers.Rows)
                         {
-                            r.Height = 28;
+                            r.Height = 30;
                         }
                     }
                     else
@@ -320,6 +335,16 @@ namespace MiniSupermarketWinForms
         // TIM KIEM KHACH HANG theo ten hoac so dien thoai
         // GET /api/customers/search?keyword=...
         // =========================================================
+                private async void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                _currentPage = 1;
+                await LoadDataAsync();
+            }
+        }
+
         private async void btnSearch_Click(object sender, EventArgs e)
         {
             _currentPage = 1;
