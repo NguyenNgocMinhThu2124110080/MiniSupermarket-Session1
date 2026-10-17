@@ -35,6 +35,10 @@ namespace MiniSupermarketWinForms
         private void InitializeComponent()
         {
             this.btnOpenCustomer = new System.Windows.Forms.Button();
+            this.panelPaging = new System.Windows.Forms.Panel();
+            this.btnPrev = new System.Windows.Forms.Button();
+            this.lblPaging = new System.Windows.Forms.Label();
+            this.btnNext = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.txtKeyword = new System.Windows.Forms.TextBox();
@@ -116,6 +120,7 @@ namespace MiniSupermarketWinForms
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgvCategories);
+            this.groupBox1.Controls.Add(this.panelPaging);
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Location = new System.Drawing.Point(59, 94);
             this.groupBox1.Name = "groupBox1";
@@ -131,9 +136,50 @@ namespace MiniSupermarketWinForms
             this.dgvCategories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCategories.Location = new System.Drawing.Point(3, 16);
             this.dgvCategories.Name = "dgvCategories";
-            this.dgvCategories.Size = new System.Drawing.Size(390, 261);
+            this.dgvCategories.Size = new System.Drawing.Size(390, 222);
             this.dgvCategories.TabIndex = 0;
             this.dgvCategories.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategories_CellClick);
+            // 
+            // panelPaging
+            // 
+            this.panelPaging.Controls.Add(this.btnNext);
+            this.panelPaging.Controls.Add(this.lblPaging);
+            this.panelPaging.Controls.Add(this.btnPrev);
+            this.panelPaging.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelPaging.Location = new System.Drawing.Point(3, 238);
+            this.panelPaging.Name = "panelPaging";
+            this.panelPaging.Size = new System.Drawing.Size(390, 39);
+            this.panelPaging.TabIndex = 2;
+            // 
+            // btnPrev
+            // 
+            this.btnPrev.Location = new System.Drawing.Point(5, 6);
+            this.btnPrev.Name = "btnPrev";
+            this.btnPrev.Size = new System.Drawing.Size(85, 26);
+            this.btnPrev.TabIndex = 0;
+            this.btnPrev.Text = "<< Trang trước";
+            this.btnPrev.UseVisualStyleBackColor = true;
+            this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
+            // 
+            // lblPaging
+            // 
+            this.lblPaging.AutoSize = true;
+            this.lblPaging.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblPaging.Location = new System.Drawing.Point(95, 11);
+            this.lblPaging.Name = "lblPaging";
+            this.lblPaging.Size = new System.Drawing.Size(130, 15);
+            this.lblPaging.TabIndex = 1;
+            this.lblPaging.Text = "Trang 1 / 1 (Tổng: 0)";
+            // 
+            // btnNext
+            // 
+            this.btnNext.Location = new System.Drawing.Point(235, 6);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(85, 26);
+            this.btnNext.TabIndex = 2;
+            this.btnNext.Text = "Trang sau >>";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // groupBox2
             // 
@@ -281,6 +327,10 @@ namespace MiniSupermarketWinForms
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnOpenCustomer;
+        private System.Windows.Forms.Panel panelPaging;
+        private System.Windows.Forms.Button btnPrev;
+        private System.Windows.Forms.Label lblPaging;
+        private System.Windows.Forms.Button btnNext;
     }
 }
 

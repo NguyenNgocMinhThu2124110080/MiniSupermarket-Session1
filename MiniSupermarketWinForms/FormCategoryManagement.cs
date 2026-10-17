@@ -16,6 +16,11 @@ namespace MiniSupermarketWinForms
 {
     public partial class FormCategoryManagement : Form
     {
+        private int _currentPage = 1;
+        private readonly int _pageSize = 10;
+        private int _totalPages = 1;
+        private int _totalItems = 0;
+
         public FormCategoryManagement()
         {
             InitializeComponent();
@@ -52,10 +57,33 @@ namespace MiniSupermarketWinForms
         {
             try
             {
-                using (var client = GetAuthenticatedClient()) // Sử dụng client đã gắn token
+                string keyword = txtKeyword.Text.Trim();
+                string url = $"categories/paged?pageNumber={_currentPage}&pageSize={_pageSize}";
+                if (!string.IsNullOrEmpty(keyword))
                 {
-                    var categories = await client.GetFromJsonAsync<List<CategoryDto>>("categories");
-                    dgvCategories.DataSource = categories;
+                    url += $"&keyword={Uri.EscapeDataString(keyword)}";
+                }
+
+                using (var client = GetAuthenticatedClient())
+                {
+                    var result = await client.GetFromJsonAsync<PagedCategoryResult>(url);
+                    if (result != null)
+                    {
+                        _currentPage = result.CurrentPage;
+                        _totalPages = result.TotalPages > 0 ? result.TotalPages : 1;
+                        _totalItems = result.TotalItems;
+                        dgvCategories.DataSource = result.Items;
+                    }
+                    else
+                    {
+                        _totalPages = 1;
+                        _totalItems = 0;
+                        dgvCategories.DataSource = null;
+                    }
+
+                    lblPaging.Text = $"Trang {_currentPage} / {_totalPages} (Tổng: {_totalItems} nhóm)";
+                    btnPrev.Enabled = _currentPage > 1;
+                    btnNext.Enabled = _currentPage < _totalPages;
                 }
             }
             catch (Exception ex)
@@ -65,6 +93,24 @@ namespace MiniSupermarketWinForms
                     "Lỗi",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (_currentPage > 1)
+            {
+                _currentPage--;
+                await LoadDataAsync();
+            }
+        }
+
+        private async void btnNext_Click(object sender, EventArgs e)
+        {
+            if (_currentPage < _totalPages)
+            {
+                _currentPage++;
+                await LoadDataAsync();
             }
         }
 
@@ -90,6 +136,8 @@ namespace MiniSupermarketWinForms
         // =========================================================
         private async void btnLoad_Click(object sender, EventArgs e)
         {
+            txtKeyword.Clear();
+            _currentPage = 1;
             await LoadDataAsync();
         }
         
@@ -238,28 +286,8 @@ namespace MiniSupermarketWinForms
         // =========================================================
         private async void btnSearch_Click(object sender, EventArgs e)
         {
-            string keyword = txtKeyword.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(keyword))
-            {
-                await LoadDataAsync();
-                return;
-            }
-
-            try
-            {
-                string url = $"categories/search?keyword={Uri.EscapeDataString(keyword)}";
-
-                using (var client = GetAuthenticatedClient())
-                {
-                    var result = await client.GetFromJsonAsync<List<CategoryDto>>(url);
-                    dgvCategories.DataSource = result;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Không thể tìm kiếm!\n\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            _currentPage = 1;
+            await LoadDataAsync();
         }
 
         // =========================================================
@@ -289,4 +317,15 @@ namespace MiniSupermarketWinForms
         public string CategoryName { get; set; } = string.Empty;
         public string Description { get; set; }
     }
+
+    // DTO nhan du lieu phan trang tu API /api/categories/paged
+    public class PagedCategoryResult
+    {
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; }
+        public int TotalItems { get; set; }
+        public int TotalPages { get; set; }
+        public List<CategoryDto> Items { get; set; } = new List<CategoryDto>();
+    }
+
 }

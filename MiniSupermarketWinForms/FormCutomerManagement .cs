@@ -16,6 +16,11 @@ namespace MiniSupermarketWinForms
 {
     public partial class FormCustomerManagement : Form
     {
+        private int _currentPage = 1;
+        private readonly int _pageSize = 10;
+        private int _totalPages = 1;
+        private int _totalItems = 0;
+
         public FormCustomerManagement()
         {
             InitializeComponent();
@@ -51,13 +56,24 @@ namespace MiniSupermarketWinForms
         {
             try
             {
+                string keyword = txtSearch.Text.Trim();
+                string url = $"customers/paged?pageNumber={_currentPage}&pageSize={_pageSize}";
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    url += $"&keyword={Uri.EscapeDataString(keyword)}";
+                }
+
                 using (var client = GetAuthenticatedClient())
                 {
-                    var customers = await client.GetFromJsonAsync<List<CustomerDto>>("customers");
+                    var result = await client.GetFromJsonAsync<PagedCustomerResult>(url);
                     dgvCustomers.Rows.Clear();
-                    if (customers != null)
+                    if (result != null)
                     {
-                        foreach (var c in customers)
+                        _currentPage = result.CurrentPage;
+                        _totalPages = result.TotalPages > 0 ? result.TotalPages : 1;
+                        _totalItems = result.TotalItems;
+
+                        foreach (var c in result.Items)
                         {
                             dgvCustomers.Rows.Add(
                                 c.CustomerId,
@@ -69,6 +85,15 @@ namespace MiniSupermarketWinForms
                             );
                         }
                     }
+                    else
+                    {
+                        _totalPages = 1;
+                        _totalItems = 0;
+                    }
+
+                    lblPaging.Text = $"Trang {_currentPage} / {_totalPages} (Tổng: {_totalItems} KH)";
+                    btnPrev.Enabled = _currentPage > 1;
+                    btnNext.Enabled = _currentPage < _totalPages;
                 }
             }
             catch (Exception ex)
@@ -78,11 +103,31 @@ namespace MiniSupermarketWinForms
             }
         }
 
+        private async void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (_currentPage > 1)
+            {
+                _currentPage--;
+                await LoadDataAsync();
+            }
+        }
+
+        private async void btnNext_Click(object sender, EventArgs e)
+        {
+            if (_currentPage < _totalPages)
+            {
+                _currentPage++;
+                await LoadDataAsync();
+            }
+        }
+
         // =========================================================
         // NUT TAI LAI
         // =========================================================
         private async void btnLoad_Click(object sender, EventArgs e)
         {
+            txtSearch.Clear();
+            _currentPage = 1;
             await LoadDataAsync();
         }
 
@@ -265,43 +310,8 @@ namespace MiniSupermarketWinForms
         // =========================================================
         private async void btnSearch_Click(object sender, EventArgs e)
         {
-            // Lay keyword tu thanh tim kiem rieng
-            string keyword = txtSearch.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(keyword))
-            {
-                await LoadDataAsync();
-                return;
-            }
-
-            try
-            {
-                string url = $"customers/search?keyword={Uri.EscapeDataString(keyword)}";
-                using (var client = GetAuthenticatedClient())
-                {
-                    var result = await client.GetFromJsonAsync<List<CustomerDto>>(url);
-                    dgvCustomers.Rows.Clear();
-                    if (result != null)
-                    {
-                        foreach (var c in result)
-                        {
-                            dgvCustomers.Rows.Add(
-                                c.CustomerId,
-                                c.CustomerName,
-                                c.PhoneNumber,
-                                c.Address,
-                                c.RewardPoints,
-                                c.MembershipRank
-                            );
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Không thể tìm kiếm!\n\n" + ex.Message, "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            _currentPage = 1;
+            await LoadDataAsync();
         }
 
         // =========================================================
@@ -328,4 +338,15 @@ namespace MiniSupermarketWinForms
         public int RewardPoints { get; set; }
         public string MembershipRank { get; set; } = string.Empty;
     }
+
+    // DTO nhan du lieu phan trang tu API /api/customers/paged
+    public class PagedCustomerResult
+    {
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; }
+        public int TotalItems { get; set; }
+        public int TotalPages { get; set; }
+        public List<CustomerDto> Items { get; set; } = new List<CustomerDto>();
+    }
+
 }

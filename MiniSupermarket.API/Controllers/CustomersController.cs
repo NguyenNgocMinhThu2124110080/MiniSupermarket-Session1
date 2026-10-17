@@ -38,10 +38,10 @@ namespace MiniSupermarket.API.Controllers
         public async Task<IActionResult> GetPagedCustomers(
             [FromQuery] string? keyword,
             [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 5)
+            [FromQuery] int pageSize = 10)
         {
             if (pageNumber < 1) pageNumber = 1;
-            if (pageSize < 1 || pageSize > 50) pageSize = 5;
+            if (pageSize < 1 || pageSize > 50) pageSize = 10;
 
             var query = _context.Customers
                 .AsNoTracking()

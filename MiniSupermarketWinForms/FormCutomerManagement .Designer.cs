@@ -16,9 +16,12 @@ namespace MiniSupermarketWinForms
         private System.Windows.Forms.Button  btnSearch;
         private System.Windows.Forms.Button  btnLoad;
 
-        // GroupBox danh sach
         private System.Windows.Forms.GroupBox     grpList;
         private System.Windows.Forms.DataGridView dgvCustomers;
+        private System.Windows.Forms.Panel        panelPaging;
+        private System.Windows.Forms.Button       btnPrev;
+        private System.Windows.Forms.Label        lblPaging;
+        private System.Windows.Forms.Button       btnNext;
 
         // GroupBox thong tin
         private System.Windows.Forms.GroupBox grpDetail;
@@ -52,6 +55,10 @@ namespace MiniSupermarketWinForms
             this.txtSearch         = new System.Windows.Forms.TextBox();
             this.btnSearch         = new System.Windows.Forms.Button();
             this.btnLoad           = new System.Windows.Forms.Button();
+            this.panelPaging       = new System.Windows.Forms.Panel();
+            this.btnPrev           = new System.Windows.Forms.Button();
+            this.lblPaging         = new System.Windows.Forms.Label();
+            this.btnNext           = new System.Windows.Forms.Button();
             this.grpList           = new System.Windows.Forms.GroupBox();
             this.dgvCustomers      = new System.Windows.Forms.DataGridView();
             this.grpDetail         = new System.Windows.Forms.GroupBox();
@@ -116,6 +123,7 @@ namespace MiniSupermarketWinForms
             this.grpList.Size     = new System.Drawing.Size(680, 445);
             this.grpList.Text     = "Danh sách khách hàng";
             this.grpList.Controls.Add(this.dgvCustomers);
+            this.grpList.Controls.Add(this.panelPaging);
 
             this.dgvCustomers.AllowUserToAddRows = false;
             this.dgvCustomers.ReadOnly = true;
@@ -124,11 +132,48 @@ namespace MiniSupermarketWinForms
             this.dgvCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCustomers.RowTemplate.Height = 24;
             this.dgvCustomers.Location = new System.Drawing.Point(3, 16);
-            this.dgvCustomers.Size = new System.Drawing.Size(674, 426);
+            this.dgvCustomers.Size = new System.Drawing.Size(674, 385);
             this.dgvCustomers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCustomers.Name = "dgvCustomers";
+
+            // panelPaging
+            this.panelPaging.Controls.Add(this.btnNext);
+            this.panelPaging.Controls.Add(this.lblPaging);
+            this.panelPaging.Controls.Add(this.btnPrev);
+            this.panelPaging.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelPaging.Location = new System.Drawing.Point(3, 403);
+            this.panelPaging.Name = "panelPaging";
+            this.panelPaging.Size = new System.Drawing.Size(674, 39);
+            this.panelPaging.TabIndex = 2;
+
+            // btnPrev
+            this.btnPrev.Location = new System.Drawing.Point(10, 6);
+            this.btnPrev.Name = "btnPrev";
+            this.btnPrev.Size = new System.Drawing.Size(110, 28);
+            this.btnPrev.TabIndex = 0;
+            this.btnPrev.Text = "<< Trang trước";
+            this.btnPrev.UseVisualStyleBackColor = true;
+            this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
+
+            // lblPaging
+            this.lblPaging.AutoSize = true;
+            this.lblPaging.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lblPaging.Location = new System.Drawing.Point(135, 11);
+            this.lblPaging.Name = "lblPaging";
+            this.lblPaging.Size = new System.Drawing.Size(160, 17);
+            this.lblPaging.TabIndex = 1;
+            this.lblPaging.Text = "Trang 1 / 1 (Tổng: 0 KH)";
+
+            // btnNext
+            this.btnNext.Location = new System.Drawing.Point(315, 6);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(110, 28);
+            this.btnNext.TabIndex = 2;
+            this.btnNext.Text = "Trang sau >>";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
 
             this.dgvCustomers.Columns.Add("CustomerId",     "Mã KH");
             this.dgvCustomers.Columns.Add("CustomerName",   "Tên khách hàng");

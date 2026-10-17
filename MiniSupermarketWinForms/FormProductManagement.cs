@@ -16,7 +16,7 @@ namespace MiniSupermarketWinForms
     {
         private int _selectedProductId = -1;
         private int _currentPage = 1;
-        private readonly int _pageSize = 5;
+        private readonly int _pageSize = 10;
         private int _totalPages = 1;
         private bool _isCategoryLoaded = false;
 

@@ -54,11 +54,11 @@ namespace MiniSupermarket.API.Controllers
             [FromQuery] string? keyword,
             [FromQuery] int? categoryId,
             [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 5)
+            [FromQuery] int pageSize = 10)
         {
             // 1. Kiểm tra tham số trang đầu vào hợp lệ
             if (pageNumber < 1) pageNumber = 1;
-            if (pageSize < 1 || pageSize > 50) pageSize = 5; // Mặc định 5 dòng, tối đa 50 dòng
+            if (pageSize < 1 || pageSize > 50) pageSize = 10; // Mặc định 10 dòng, tối đa 50 dòng
 
             // 2. Khởi tạo truy vấn LINQ IQueryable kết hợp Eager Loading (.Include)
             var query = _context.Products
